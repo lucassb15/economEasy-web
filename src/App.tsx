@@ -1,11 +1,10 @@
-function App() {
-  return (
-    <>
-      <div className="text-black p-4">
-        <h1>Hello World!</h1>
-      </div>
-    </>
-  );  
-}
+import { BrowserRouter } from 'react-router-dom';
+import { Router } from './routes/Router';
 
-export default App;
+export function App() {
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  );
+}
