@@ -1,27 +1,53 @@
-# React + TypeScript + Vite
+<h1 align="center">EconomEasy: Gestão Financeira Pessoal 🚀</h1>
+<p align="center">
+  <i>Gerencie suas finanças com estilo e eficiência!</i>
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="https://images.unsplash.com/photo-1593672755342-741a7f868732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="EconomEasy Banner" width="500px">
+</p>
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🌌 Sobre
 
-## Expanding the ESLint configuration
+**EconomEasy** é a sua solução definitiva para manter as finanças em dia. Desenvolvido como parte do TCC do curso de Análise e Desenvolvimento de Sistemas, esta aplicação tem como objetivo proporcionar uma visão clara e intuitiva dos seus gastos, permitindo um controle eficaz e uma evolução consciente das suas contas.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 🌟 Principais Funcionalidades
 
-- Configure the top-level `parserOptions` property like this:
+- 💼 Controle de gastos detalhado;
+- 📆 Visão mensal/anual de despesas;
+- 🏷 Categorias personalizadas para diferentes tipos de gastos;
+- 📊 Gráficos interativos para melhor análise.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### 🛠 Tecnologias Utilizadas
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- 📘 **React com TypeScript**: Poder do React com a segurança do TypeScript.
+- 🎨 **TailwindCSS**: Estilização moderna e responsiva.
+- ⚡ **Vite**: Ferramenta de build ágil e eficiente.
+
+### 🚀 Como Iniciar?
+
+1. **Pré-requisitos**: É necessário ter o `node` e `npm` instalados. Caso não tenha, [baixe aqui](https://nodejs.org/).
+2. **Clone o projeto**:
+    ```bash
+    git clone [url-do-repositório]
+    ```
+3. **Instalação**:
+    Entre na pasta do projeto e execute:
+    ```bash
+    npm install
+    ```
+4. **Execução**:
+    Ainda na pasta, execute:
+    ```bash
+    npm run dev
+    ```
+
+> Acesse `http://localhost:5173` e comece a usar o **EconomEasy**!
+
+### 💌 Feedback
+
+Gostaria de deixar seu feedback ou fazer alguma sugestão? Sinta-se à vontade para abrir uma issue ou enviar um pull request. E se você gostou do projeto, dê uma ⭐️!
+
+---
