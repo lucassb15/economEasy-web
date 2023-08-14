@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1593672755342-741a7f868732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="EconomEasy Banner" width="500px">
+  <img src="https://images.unsplash.com/photo-1593672755342-741a7f868732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="EconomEasy Banner" width="100%" height="300px">
 </p>
 
 ---
