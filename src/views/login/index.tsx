@@ -1,11 +1,5 @@
-import { Navigation } from "../../components/Navigation";
+import { Hero } from '../../components/Hero';
 
 export function Login() {
-    const menu: { label: string; link: string; }[] = [];
-  return (
-    <div>
-     <Navigation menuItems={menu}/>
-      Login screen
-    </div>
-  );
+  return <Hero />;
 }

@@ -1,18 +1,19 @@
 {
-  "name": "contacomigo-web",
+  "name": "fidelese-web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\" --fix",
     "format": "prettier --write \"src/**/*.{js,ts,tsx,css,md}\"",
     "preview": "vite preview"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.0.10",
     "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
     "postcss": "^8.4.27",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
