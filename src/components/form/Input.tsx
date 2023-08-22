@@ -23,18 +23,21 @@ export const Input: FC<InputProps> = ({
 
   //Manipula o focus do input
   const [isFocused, setIsFocused] = useState(false);
-
-  const focusClasses = isFocused ? 'border-red-300' : 'border-gray-300';
-
   return (
-    <div className={`flex items-center border ${focusClasses} rounded-sm`}>
+    <div
+      className={`flex items-center border rounded-sm transition-colors duration-300 ${
+        isFocused ? 'border-blue-300 ring-1' : 'border-gray-300'
+      }`}
+    >
       <div
-        className={`text-gray-500 px-2 py-1 bg-white border-r ${focusClasses}`}
+        className={`text-gray-500 px-2 py-2 bg-white border-r transition-colors duration-300 ${
+          isFocused ? 'border-blue-300' : 'border-gray-300'
+        }`}
       >
         {icon}
       </div>
       <input
-        className="flex-grow py-1 px-2 border-none outline-none rounded-r"
+        className="flex-grow py-2 px-2 border-none outline-none rounded-r"
         type={type}
         value={value}
         onChange={handleInputChange}
