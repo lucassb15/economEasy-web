@@ -3,13 +3,14 @@ import axios from 'axios';
 import { Input } from './Input';
 import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react';
 import  Logo  from '../../assets/Logo.svg'
+import { Link } from 'react-router-dom';
 interface FormProps {
   FormTitle: string;
   FormSubtitle: string;
   SubmitText: string;
 }
 
-export function Form({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
+export function FormRegister({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,7 +26,7 @@ export function Form({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
 
       // Criar redirect para Home
     } catch (error) {
-      console.error('Erro no login:', error);
+      console.error('Erro ao cadastrar:', error);
       // Escolher a lib de mostrar erro depois
     }
   };
@@ -56,7 +57,7 @@ export function Form({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
         />
         <button
           type="submit"
-          className="bg-red-600 hover:bg-red-500 text-white font-bold text-sm md:text-base py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+          className="bg-darkblue hover:bg-darkblue-hover text-white font-bold text-sm md:text-base py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         >
           {SubmitText}
         </button>
@@ -75,14 +76,14 @@ export function Form({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
         <p className="text-sm font-medium text-gray-500">OU</p>
         <hr className="border border-gray-300 w-full" />
       </div>
-      <button className="bg-red-600 w-full hover:bg-red-500 flex-row flex items-center justify-center gap-3 text-white font-bold py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50">
+      <button className="bg-darkblue hover:bg-darkblue-hover w-full flex-row flex items-center justify-center gap-3 text-white font-bold py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
         <GoogleLogo size={20} weight='bold'/>
         <h3 className="text-sm md:text-base">Logar-se com Google</h3>
       </button>
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex items-center justify-center mt-5">
         <p className="text-xs md:text-sm font-normal text-black">
           Não tem conta?
-          <span className="font-semibold underline underline-offset-2 pb-10"> Criar conta</span>
+          <Link to="/register" className="font-semibold underline underline-offset-2 pb-10"> Criar conta</Link>
         </p>
       </div>
     </div>

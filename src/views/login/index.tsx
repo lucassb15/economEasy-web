@@ -1,5 +1,5 @@
-import { Hero } from '../../components/Hero';
+import { HeroLogin } from "../../components/Hero/HeroLogin";
 
 export function Login() {
-  return <Hero />;
+  return <HeroLogin />;
 }
