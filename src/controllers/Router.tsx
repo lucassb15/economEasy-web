@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
-import { Login } from '../views/login/index';
-import { Register } from '../views/register/index'
-import { RegisterCompany } from '../views/company';
+import { Login } from '../views/authentication/login/index';
+import { Register } from '../views/authentication/register'
+import { RegisterCompany } from '../views/authentication/company';
 export function Router() {
   return (
     <Routes>

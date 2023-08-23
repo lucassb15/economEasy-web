@@ -106,8 +106,8 @@ export function FormRegisterCompany({ FormTitle, FormSubtitle, SubmitText }: For
       </div>
       <div className="w-full flex items-center justify-center mt-5">
         <p className="text-xs md:text-sm font-normal text-black">
-          Não tem conta?
-          <Link to="/register" className="font-semibold underline underline-offset-2 pb-10"> Criar conta</Link>
+        Já tem uma conta?
+          <Link to="/login" className="font-semibold underline underline-offset-2 pb-10"> Fazer login</Link>
         </p>
       </div>
     </div>

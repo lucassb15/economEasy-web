@@ -9,7 +9,7 @@ export function HeroRegisterCompany() {
         <img className="w-full h-full object-cover" src={HeroPeople} alt="Hero" />
       </div>
       <FormRegisterCompany
-        FormTitle='Cadastro'
+        FormTitle='Cadastro Empresa'
         FormSubtitle='Por favor insira suas informações'
         SubmitText='Cadastrar'
       />

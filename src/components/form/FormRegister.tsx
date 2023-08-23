@@ -4,6 +4,7 @@ import { Input } from './Input';
 import { Envelope, LockKey, User } from '@phosphor-icons/react';
 import  Logo  from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom';
+
 interface FormProps {
   FormTitle: string;
   FormSubtitle: string;
@@ -97,8 +98,8 @@ export function FormRegister({ FormTitle, FormSubtitle, SubmitText }: FormProps)
       </div>
       <div className="w-full flex items-center justify-center mt-5">
         <p className="text-xs md:text-sm font-normal text-black">
-          Não tem conta?
-          <Link to="/register" className="font-semibold underline underline-offset-2 pb-10"> Criar conta</Link>
+          Já tem uma conta?
+          <Link to="/login" className="font-semibold underline underline-offset-2 pb-10"> Fazer login</Link>
         </p>
       </div>
     </div>
