@@ -4,9 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        neongreen: {
-          DEFAULT: '#DDFF21',
-          hover: '#CCEE1A'
+        darkblue: {
+          DEFAULT: '#0E2A56',
+          hover: '#133873'
+        },
+        goldenyellow: {
+          DEFAULT: '#E7C213',
+          hover: '#EECC2E'
         },
       },
     },

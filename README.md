@@ -1,50 +1,52 @@
-<h1 align="center">EconomEasy: Gestão Financeira Pessoal 🚀</h1>
+<h1 align="center">Fidele-se: Cartão Fidelidade Digital 🚀</h1>
 <p align="center">
-  <i>Gerencie suas finanças com estilo e eficiência!</i>
-</p>
-
-<p align="center">
-  <img src="https://images.unsplash.com/photo-1593672755342-741a7f868732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="EconomEasy Banner" width="500px">
+  <i>Seu cartão fidelidade na palma da sua mão!</i>
 </p>
 
 ---
 
 ### 🌌 Sobre
 
-**EconomEasy** é a sua solução definitiva para manter as finanças em dia. Desenvolvido como parte do TCC do curso de Análise e Desenvolvimento de Sistemas, esta aplicação tem como objetivo proporcionar uma visão clara e intuitiva dos seus gastos, permitindo um controle eficaz e uma evolução consciente das suas contas.
+Com o **Fidele-se**, você não precisa mais carregar cartões físicos de fidelidade. Transforme sua experiência com os estabelecimentos parceiros e mantenha seus check-ins organizados e acessíveis. Desenvolvido inicialmente como uma plataforma desktop responsiva, logo expandiremos para uma versão mobile.
 
 ### 🌟 Principais Funcionalidades
 
-- 💼 Controle de gastos detalhado;
-- 📆 Visão mensal/anual de despesas;
-- 🏷 Categorias personalizadas para diferentes tipos de gastos;
-- 📊 Gráficos interativos para melhor análise.
+- ✅ Registrar e visualizar check-ins em estabelecimentos parceiros.
+- 📊 Acompanhar seu progresso e recompensas.
+- 📣 Visualizar anúncios e promoções de empresas parceiras.
 
 ### 🛠 Tecnologias Utilizadas
 
-- 📘 **React com TypeScript**: Poder do React com a segurança do TypeScript.
+- 📘 **React com TypeScript**: O poder do React combinado com a segurança e as vantagens do TypeScript.
 - 🎨 **TailwindCSS**: Estilização moderna e responsiva.
-- ⚡ **Vite**: Ferramenta de build ágil e eficiente.
+- ⚡ **Vite**: Uma ferramenta de build ágil e eficiente para aplicações web modernas.
+- 🌐 **Axios**: Cliente HTTP baseado em Promises para fazer requisições.
+- 🍪 **Nookies**: Um auxiliar para lidar com cookies no Next.js.
+- 🔐 **JWT-decode**: Decodifica tokens JWT para autenticação e autorização.
+- 🚀 **React Router Dom**: Roteamento dinâmico para aplicações React.
+- 🍞 **React Hot Toast**: Notificações elegantes e acessíveis para React.
+- 🧑‍💼 **eslint e prettier**: Ferramentas para garantir a qualidade e a formatação do código.
 
 ### 🚀 Como Iniciar?
 
 1. **Pré-requisitos**: É necessário ter o `node` e `npm` instalados. Caso não tenha, [baixe aqui](https://nodejs.org/).
-2. **Clone o projeto**:
-    ```bash
-    git clone [url-do-repositório]
-    ```
-3. **Instalação**:
-    Entre na pasta do projeto e execute:
-    ```bash
-    npm install
-    ```
-4. **Execução**:
-    Ainda na pasta, execute:
-    ```bash
-    npm run dev
-    ```
 
-> Acesse `http://localhost:5173` e comece a usar o **EconomEasy**!
+2. **Clone o projeto**:
+   ```bash
+   git clone [url-do-repositório]
+   ```
+3. **Instalação**:
+   Entre na pasta do projeto e execute:
+   ```bash
+   npm install
+   ```
+4. **Execução**:
+   Ainda na pasta, execute:
+   ```bash
+   npm run dev
+   ```
+
+> Acesse `http://localhost:5173` e comece a usar o **Fidele-se**!
 
 ### 💌 Feedback
 
