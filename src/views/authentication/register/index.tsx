@@ -1,4 +1,4 @@
-import { HeroRegister } from '../../../components/Hero/HeroRegister';
+import { HeroRegister } from '../../../components/hero/HeroRegister';
 
 export function Register() {
   return <HeroRegister />;
