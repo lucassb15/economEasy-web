@@ -15,7 +15,7 @@ export function ProtectedRoute({ children }: any) {
       </div>
     )
   }
-
+  // Teste
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
