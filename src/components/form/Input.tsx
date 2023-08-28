@@ -1,50 +1,60 @@
-import { ChangeEvent, FC, ReactNode, useState } from 'react';
+import React, {
+  ChangeEvent,
+  ReactNode,
+  useState,
+  ForwardRefRenderFunction,
+} from 'react'
+import { FieldError } from 'react-hook-form'
 
-// Definição das propriedades para o componente Input
 interface InputProps {
-  type?: string;
-  placeholder?: string;
-  value: string;
-  setValue: (value: string) => void;
-  icon?: ReactNode;
+  type?: string
+  placeholder?: string
+  value?: string
+  setValue?: (value: string) => void
+  icon?: ReactNode
+  error?: FieldError
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
 }
 
-export const Input: FC<InputProps> = ({
-  type = 'text',
-  placeholder,
-  value,
-  setValue,
-  icon,
-}) => {
-  // Manipula a mudança de valor no input
+const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+  { type = 'text', placeholder, value, setValue, icon, error, ...rest },
+  ref,
+) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+    setValue?.(e.target.value)
+  }
 
-  //Manipula o focus do input
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(false)
   return (
-    <div
-      className={`flex items-center border rounded-sm transition-colors duration-300 ${
-        isFocused ? 'border-blue-300 ring-1' : 'border-gray-300'
-      }`}
-    >
+    <div>
       <div
-        className={`text-gray-500 px-2 py-2 bg-white border-r transition-colors duration-300 ${
-          isFocused ? 'border-blue-300' : 'border-gray-300'
+        className={`flex items-center border rounded-sm transition-colors duration-300 ${
+          isFocused ? 'border-blue-300 ring-1' : 'border-gray-300'
         }`}
       >
-        {icon}
+        <div
+          className={`text-gray-500 px-2 py-2 bg-white border-r transition-colors duration-300 ${
+            isFocused ? 'border-blue-300' : 'border-gray-300'
+          }`}
+        >
+          {icon}
+        </div>
+        <input
+          ref={ref}
+          className="flex-grow py-2 px-2 border-none outline-none rounded-r"
+          type={type}
+          value={value}
+          onChange={handleInputChange}
+          placeholder={placeholder}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          {...rest}
+        />
       </div>
-      <input
-        className="flex-grow py-2 px-2 border-none outline-none rounded-r"
-        type={type}
-        value={value}
-        onChange={handleInputChange}
-        placeholder={placeholder}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      />
+      {!!error && <span className="text-red-500">{error.message}</span>}
     </div>
-  );
-};
+  )
+}
+
+export const Input = React.forwardRef(InputBase)

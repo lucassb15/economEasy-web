@@ -21,12 +21,22 @@ interface UserProps {
   role: string
 }
 
+interface RegisterUserProps {
+  name: string
+}
+
+interface RegisterCompanyProps {
+  companyName: string
+}
+
 interface AuthContextProps {
   isAuthenticated: boolean
   loading: boolean
   user: UserProps | null
   error: null | string
   signIn: (data: signInCredentials) => Promise<void>
+  registerUser: (data: RegisterUserProps) => Promise<void>
+  registerCompany: (data: RegisterCompanyProps) => Promise<void>
   signOut: () => void
 }
 
@@ -89,28 +99,90 @@ export function AuthProvider({ children }: AuthProviderProps) {
         api.defaults.headers.Authorization = `Bearer ${accessToken}`
 
         if (userLogged.role === 'owner') {
-          navigate('/owner/dashboard')
+          navigate('/company/dashboard')
         } else {
           navigate('/')
         }
       })
       .catch((error) => {
         console.error(error)
-        toast.error(
-          'Ops! Ocorreu um erro inesperado. Por favor, verifique o console para mais detalhes.',
-          {
-            position: 'top-right',
-            style: {
-              backgroundColor: colors.red[500],
-              color: colors.white,
-              fontSize: 16,
-              fontWeight: 500,
-              padding: 16,
-            },
-            icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+        toast.error(error.response.data, {
+          position: 'top-right',
+          style: {
+            backgroundColor: colors.red[500],
+            color: colors.white,
+            fontSize: 16,
+            fontWeight: 500,
+            padding: 16,
           },
-        )
+          icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+        })
         console.log(error.response.data.message)
+        setError(error.response.data.message)
+      })
+  }
+
+  async function registerUser(data: RegisterUserProps) {
+    api
+      .post('/register/user', data)
+      .then((response) => {
+        const { accessToken } = response.data
+
+        setCookie(undefined, 'fidelese.token', accessToken, {
+          maxAge: 60 * 60 * 60 * 7, // 7 days
+          path: '/',
+        })
+
+        const userRegistered: UserProps = jwtDecode(accessToken)
+
+        setUser(userRegistered)
+
+        api.defaults.headers.Authorization = `Bearer ${accessToken}`
+
+        if (userRegistered.role === 'company') {
+          navigate('/company/dashboard')
+        } else {
+          navigate('/')
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+        toast.error(error.response.data.message, {
+          position: 'top-right',
+          style: {
+            backgroundColor: colors.red[500],
+            color: colors.white,
+            fontSize: 16,
+            fontWeight: 500,
+            padding: 16,
+          },
+          icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+        })
+        setError(error.response.data.message)
+      })
+  }
+
+  async function registerCompany(data: RegisterCompanyProps) {
+    api
+      .post('/register/company', data)
+      .then(() => {
+        toast.success('Empresa registrada com sucesso!', {
+          // ... (outros parâmetros do toast se necessário)
+        })
+      })
+      .catch((error) => {
+        console.error(error)
+        toast.error('Ops! Ocorreu um erro inesperado ao registrar a empresa.', {
+          position: 'top-right',
+          style: {
+            backgroundColor: colors.red[500],
+            color: colors.white,
+            fontSize: 16,
+            fontWeight: 500,
+            padding: 16,
+          },
+          icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+        })
         setError(error.response.data.message)
       })
   }
@@ -127,7 +199,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ loading, user, isAuthenticated, signIn, signOut, error }}
+      value={{
+        loading,
+        user,
+        isAuthenticated,
+        signIn,
+        registerUser,
+        registerCompany,
+        signOut,
+        error,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -17,10 +17,10 @@ export function ProtectedRoute({ children }: any) {
   }
   // Teste
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/signin" replace />
   }
 
-  if (!isAuthenticated || (isAuthenticated && user?.role !== 'administrator')) {
+  if (!isAuthenticated || (isAuthenticated && user?.role !== 'company')) {
     return <AccessDenied />
   }
 

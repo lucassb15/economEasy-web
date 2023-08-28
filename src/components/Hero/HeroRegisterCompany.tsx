@@ -1,5 +1,5 @@
-import HeroPeople from '../../assets/test.png';
-import { FormRegisterCompany } from '../form/FormRegisterCompany';
+import HeroPeople from '../../assets/test.png'
+import { FormController } from '../form/FormController'
 
 export function HeroRegisterCompany() {
   return (
@@ -11,11 +11,7 @@ export function HeroRegisterCompany() {
           alt="Hero"
         />
       </div>
-      <FormRegisterCompany
-        FormTitle="Cadastro Empresa"
-        FormSubtitle="Por favor insira suas informações"
-        SubmitText="Cadastrar"
-      />
+      <FormController page="register/company" />
     </div>
-  );
+  )
 }

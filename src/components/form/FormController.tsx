@@ -1,4 +1,6 @@
 import { FormLogin } from './FormLogin'
+import { FormRegisterCompany } from './FormRegisterCompany'
+import { FormRegisterUser } from './FormRegisterUser'
 
 type FormControllerProps = {
   page: string
@@ -14,6 +16,22 @@ export function FormController({ page }: FormControllerProps) {
           SubmitText="Entrar"
         />
       ) : null}
+
+      {page === 'register/user' && (
+        <FormRegisterUser
+          FormTitle="Cadastro"
+          FormSubtitle="Por favor insira suas informações"
+          SubmitText="Cadastrar"
+        />
+      )}
+
+      {page === 'register/company' && (
+        <FormRegisterCompany
+          FormTitle="Cadastro Empresa"
+          FormSubtitle="Por favor insira suas informações"
+          SubmitText="Cadastrar"
+        />
+      )}
     </>
   )
 }

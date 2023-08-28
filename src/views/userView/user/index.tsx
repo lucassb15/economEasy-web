@@ -3,5 +3,5 @@ export function Home() {
     <div>
       <h1>Tela inicial usuário</h1>
     </div>
-  );
+  )
 }

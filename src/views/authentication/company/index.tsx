@@ -1,5 +1,5 @@
-import { HeroRegisterCompany } from '../../../components/hero/HeroRegisterCompany';
+import { HeroRegisterCompany } from '../../../components/Hero/HeroRegisterCompany'
 
 export function RegisterCompany() {
-  return <HeroRegisterCompany />;
+  return <HeroRegisterCompany />
 }

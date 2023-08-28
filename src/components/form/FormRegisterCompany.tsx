@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Input } from './Input';
-import { Envelope, LockKey, Buildings, Image } from '@phosphor-icons/react';
-import Logo from '../../assets/Logo.svg';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import axios from 'axios'
+import { Input } from './Input'
+import { Envelope, LockKey, Buildings, Image } from '@phosphor-icons/react'
+import Logo from '../../assets/Logo.svg'
+import { Link } from 'react-router-dom'
 interface FormProps {
-  FormTitle: string;
-  FormSubtitle: string;
-  SubmitText: string;
+  FormTitle: string
+  FormSubtitle: string
+  SubmitText: string
 }
 
 export function FormRegisterCompany({
@@ -15,14 +15,14 @@ export function FormRegisterCompany({
   FormSubtitle,
   SubmitText,
 }: FormProps) {
-  const [image, setImage] = useState('');
-  const [nameCompany, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [image, setImage] = useState('')
+  const [nameCompany, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await axios.post('Rota do backend, Colocar depois', {
         nameCompany,
@@ -30,16 +30,16 @@ export function FormRegisterCompany({
         password,
         confirmPassword,
         image,
-      });
-      const token = response.data.token;
-      localStorage.setItem('authToken', token);
+      })
+      const token = response.data.token
+      localStorage.setItem('authToken', token)
 
       // Criar redirect para Home
     } catch (error) {
-      console.error('Erro ao cadastrar:', error);
+      console.error('Erro ao cadastrar:', error)
       // Escolher a lib de mostrar erro depois
     }
-  };
+  }
 
   return (
     <div className="flex flex-col md:overflow-y-auto custom-scrollbar h-screen p-4 sm:p-10 md:p-20 lg:p-20 gap-y-5 items-center justify-center w-full md:w-1/2">
@@ -82,7 +82,13 @@ export function FormRegisterCompany({
           setValue={setConfirmPassword}
         />
         <Input
-          icon={<Image size={24} weight="thin" />}
+          icon={
+            <Image
+              size={24}
+              weight="thin"
+              alt="clique no botão para inserir a logo da sua empresa"
+            />
+          }
           type="file"
           placeholder="Logo da empresa"
           value={image}
@@ -122,5 +128,5 @@ export function FormRegisterCompany({
         </p>
       </div>
     </div>
-  );
+  )
 }

@@ -10,8 +10,8 @@ export function HeroLogin() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAuthenticated && user?.role === 'owner') {
-      navigate('/casadocaraio')
+    if (isAuthenticated && user?.role === 'company') {
+      navigate('/company/dashboard')
     } else if (isAuthenticated && user?.role === 'user') {
       console.log('client')
       navigate('/')
