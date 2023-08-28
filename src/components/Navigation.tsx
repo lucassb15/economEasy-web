@@ -1,38 +1,38 @@
-import { useState, useRef, useEffect } from 'react';
-import { List, PiggyBank } from '@phosphor-icons/react';
-import { Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react'
+import { List, PiggyBank } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom'
 
 interface NavigationProps {
   menuItems: {
-    label: string;
-    link: string;
-  }[];
+    label: string
+    link: string
+  }[]
 }
 
 export function Navigation({ menuItems }: NavigationProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLUListElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const menuRef = useRef<HTMLUListElement | null>(null)
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    window.addEventListener('resize', handleResize);
+    document.addEventListener('mousedown', handleClickOutside)
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
   // Adicionando essa função para lidar com o evento de resize
   const handleResize = () => {
     if (window.innerWidth > 1024) {
-      setIsOpen(false); // Fechar o menu ao redimensionar para desktop
+      setIsOpen(false) // Fechar o menu ao redimensionar para desktop
     }
-  };
+  }
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsOpen(false);
+      setIsOpen(false)
     }
-  };
+  }
 
   return (
     <div className="bg-[#42008C] text-white">
@@ -80,5 +80,5 @@ export function Navigation({ menuItems }: NavigationProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

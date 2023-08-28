@@ -1,9 +1,13 @@
-import { useState, useContext } from 'react'
-import { Input } from './Input'
-import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react'
-import Logo from '../../assets/Logo.svg'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { signInSchema } from '../../schemas/user.schema'
+
+import Logo from '../../assets/Logo.svg'
+import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react'
+import { Input } from './Input'
 
 interface FormProps {
   FormTitle: string
@@ -11,14 +15,21 @@ interface FormProps {
   SubmitText: string
 }
 
-export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
-  const { signIn } = useContext(AuthContext)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+interface SignInFormData {
+  email: string
+  password: string
+}
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    await signIn({ email, password })
+export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
+  const { register, handleSubmit, formState } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+  })
+  const { errors } = formState
+
+  const { signIn } = useContext(AuthContext)
+
+  const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
+    await signIn(data)
   }
 
   return (
@@ -32,20 +43,23 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
         </h3>
         <p className="text-sm md:text-base lg:text-lg mb-2">{FormSubtitle}</p>
       </div>
-      <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit}>
+      <form
+        className="w-full flex flex-col gap-5"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Input
           icon={<Envelope size={24} weight="thin" />}
           type="email"
           placeholder="E-mail"
-          value={email}
-          setValue={setEmail}
+          {...register('email')}
+          error={errors.email}
         />
         <Input
           icon={<LockKey size={24} weight="thin" />}
           type="password"
           placeholder="Senha"
-          value={password}
-          setValue={setPassword}
+          {...register('password')}
+          error={errors.password}
         />
         <button
           type="submit"
@@ -77,7 +91,7 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
           <p className="text-xs md:text-sm font-normal text-black">
             Não tem conta?
             <Link
-              to="/register"
+              to="/register/user"
               className="font-semibold underline underline-offset-2 pb-10"
             >
               {' '}

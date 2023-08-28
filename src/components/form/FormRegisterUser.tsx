@@ -1,44 +1,44 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Input } from './Input';
-import { Envelope, LockKey, User } from '@phosphor-icons/react';
-import Logo from '../../assets/Logo.svg';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import axios from 'axios'
+import { Input } from './Input'
+import { Envelope, LockKey, User } from '@phosphor-icons/react'
+import Logo from '../../assets/Logo.svg'
+import { Link } from 'react-router-dom'
 
 interface FormProps {
-  FormTitle: string;
-  FormSubtitle: string;
-  SubmitText: string;
+  FormTitle: string
+  FormSubtitle: string
+  SubmitText: string
 }
 
-export function FormRegister({
+export function FormRegisterUser({
   FormTitle,
   FormSubtitle,
   SubmitText,
 }: FormProps) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await axios.post('Rota do backend, Colocar depois', {
         name,
         email,
         password,
         confirmPassword,
-      });
-      const token = response.data.token;
-      localStorage.setItem('authToken', token);
+      })
+      const token = response.data.token
+      localStorage.setItem('authToken', token)
 
       // Criar redirect para Home
     } catch (error) {
-      console.error('Erro ao cadastrar:', error);
+      console.error('Erro ao cadastrar:', error)
       // Escolher a lib de mostrar erro depois
     }
-  };
+  }
 
   return (
     <div className="flex flex-col md:overflow-y-auto custom-scrollbar h-screen p-4 sm:p-10 md:p-20 lg:p-20 gap-y-5 items-center justify-center w-full md:w-1/2">
@@ -114,5 +114,5 @@ export function FormRegister({
         </p>
       </div>
     </div>
-  );
+  )
 }

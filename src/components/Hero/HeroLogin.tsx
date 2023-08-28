@@ -3,16 +3,17 @@ import HeroPeople from '../../assets/test.png'
 import { AuthContext } from '../../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 import { FormController } from '../form/FormController'
-
+import { Roles } from '../../@types/Roles'
 export function HeroLogin() {
   const { isAuthenticated, user } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAuthenticated && user?.role === 'owner') {
-      navigate('/casadocaraio')
-    } else if (isAuthenticated && user?.role === 'user') {
+    if (isAuthenticated && user?.role === Roles.Owner) {
+      console.log('owner')
+      navigate('/company/dashboard')
+    } else if (isAuthenticated && user?.role === Roles.Customer) {
       console.log('client')
       navigate('/')
     }

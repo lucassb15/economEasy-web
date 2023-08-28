@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 import { AuthContext } from '../contexts/AuthContext'
 import { AccessDenied } from '../views/acessDenied'
+import { Roles } from '../@types/Roles'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ProtectedRoute({ children }: any) {
@@ -17,10 +18,10 @@ export function ProtectedRoute({ children }: any) {
   }
   // Teste
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/signin" replace />
   }
 
-  if (!isAuthenticated || (isAuthenticated && user?.role !== 'administrator')) {
+  if (!isAuthenticated || (isAuthenticated && user?.role !== Roles.Owner)) {
     return <AccessDenied />
   }
 
