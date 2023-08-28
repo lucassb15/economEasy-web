@@ -7,6 +7,7 @@ import { AccessDenied } from '../views/acessDenied'
 export function Router() {
   return (
     <Routes>
+      <Route path="/" element={<SignIn />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/register/user" element={<RegisterUser />} />
       <Route path="/register/company" element={<RegisterCompany />} />

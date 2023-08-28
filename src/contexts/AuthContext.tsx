@@ -1,12 +1,15 @@
 import jwtDecode from 'jwt-decode'
 import { destroyCookie, parseCookies, setCookie } from 'nookies'
 import { ReactNode, createContext, useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import colors from 'tailwindcss/colors'
 
+import { toast } from 'react-hot-toast'
+import colors from 'tailwindcss/colors'
 import { XCircle } from '@phosphor-icons/react'
+
 import { api } from '../api/api'
+
+import { Roles } from '../@types/Roles'
 
 interface signInCredentials {
   email: string
@@ -17,8 +20,7 @@ interface UserProps {
   id: string
   name: string
   email: string
-  roleId: string
-  role: string
+  role: Roles
 }
 
 interface RegisterUserProps {
@@ -98,7 +100,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         api.defaults.headers.Authorization = `Bearer ${accessToken}`
 
-        if (userLogged.role === 'owner') {
+        if (userLogged.role === Roles.Owner) {
           navigate('/company/dashboard')
         } else {
           navigate('/')
@@ -139,7 +141,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         api.defaults.headers.Authorization = `Bearer ${accessToken}`
 
-        if (userRegistered.role === 'company') {
+        if (userRegistered.role === Roles.Owner) {
           navigate('/company/dashboard')
         } else {
           navigate('/')
