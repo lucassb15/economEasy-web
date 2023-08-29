@@ -103,12 +103,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (userLogged.role === Roles.Owner) {
           navigate('/company/dashboard')
         } else {
-          navigate('/')
+          navigate('/home')
         }
       })
       .catch((error) => {
         console.error(error)
-        toast.error(error.response.data, {
+        toast.error(error.response.data.message, {
           position: 'top-right',
           style: {
             backgroundColor: colors.red[500],
@@ -117,7 +117,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
             fontWeight: 500,
             padding: 16,
           },
-          icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+          icon: (
+            <XCircle
+              size={54}
+              weight="fill"
+              className="text-gray-50 cursor-pointer"
+            />
+          ),
         })
         console.log(error.response.data.message)
         setError(error.response.data.message)
@@ -193,7 +199,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       destroyCookie(null, 'fidelese.token')
       setUser(null)
-      navigate('/')
+      navigate('/signin')
     } catch (error) {
       console.error(error)
     }

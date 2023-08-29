@@ -8,7 +8,7 @@ export function App() {
     <BrowserRouter>
       <AuthProvider>
         <Router />
-        <Toaster />
+        <Toaster containerClassName="z-50" />
       </AuthProvider>
     </BrowserRouter>
   )

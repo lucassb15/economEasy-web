@@ -43,3 +43,11 @@
   background-color: transparent;
   border-radius: 6px;
 }
+
+.toast-container {
+  z-index: 9999 !important;
+}
+
+.react-hot-toast {
+  z-index: 9999 !important;
+}

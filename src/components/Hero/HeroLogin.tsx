@@ -11,11 +11,9 @@ export function HeroLogin() {
 
   useEffect(() => {
     if (isAuthenticated && user?.role === Roles.Owner) {
-      console.log('owner')
       navigate('/company/dashboard')
     } else if (isAuthenticated && user?.role === Roles.Customer) {
-      console.log('client')
-      navigate('/')
+      navigate('/home')
     }
   }, [isAuthenticated, user, navigate])
 
