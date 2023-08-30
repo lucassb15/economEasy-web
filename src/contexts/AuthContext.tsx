@@ -102,8 +102,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         if (userLogged.role === Roles.Owner) {
           navigate('/company/dashboard')
+        } else if (userLogged.role === Roles.Employee) {
+          navigate('/employee/dashboard') // Assumindo que você tem uma rota diferente para Employee
         } else {
-          navigate('/home')
+          navigate('/home') // Para o papel "User" e qualquer outro caso
         }
       })
       .catch((error) => {

@@ -6,7 +6,7 @@ import { AccessDenied } from '../views/acessDenied'
 import { Roles } from '../@types/Roles'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function ProtectedRoute({ children }: any) {
+export function PrivateRouteCompany({ children }: any) {
   const { isAuthenticated, user, loading } = useContext(AuthContext)
 
   if (loading) {
@@ -21,7 +21,7 @@ export function ProtectedRoute({ children }: any) {
     return <Navigate to="/signin" replace />
   }
 
-  if (!isAuthenticated || (isAuthenticated && user?.role !== Roles.Owner)) {
+  if (isAuthenticated && user?.role !== Roles.Owner) {
     return <AccessDenied />
   }
 

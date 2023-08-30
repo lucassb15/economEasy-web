@@ -1,8 +1,11 @@
 import { Button } from '../components/Button'
+import { useNavigate } from 'react-router-dom'
 
 import acessImg from '../assets/access-denied.svg'
 
 export function AccessDenied() {
+  const navigate = useNavigate()
+
   return (
     <div className="flex h-screen flex-col-reverse items-center justify-center gap-8 bg-gray-100 bg-notFound bg-cover bg-no-repeat px-8 xl:grid xl:grid-cols-2 xl:px-40">
       <div className="flex w-full flex-col items-center justify-center gap-8 xl:max-w-md">
@@ -15,7 +18,10 @@ export function AccessDenied() {
           contate nosso suporte.
         </p>
 
-        <Button ButtonTitle="Voltar para casa" to={'/'} />
+        <Button
+          ButtonTitle="Voltar para casa"
+          onClick={() => navigate('/signin')}
+        />
       </div>
 
       <div className="flex items-end justify-center">

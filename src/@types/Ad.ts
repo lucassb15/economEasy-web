@@ -1,5 +1,6 @@
-export interface Card {
+export interface Ad {
   id: string
+  company: string
   companyId: string
   name: string
   price: number
