@@ -1,13 +1,14 @@
-import { Card } from './Card'
-import { Ad } from './Ad'
-import { Stat } from './Stat'
-export interface User {
+import { CardProps } from './Card'
+import { AdProps } from './Ad'
+import { StatProps } from './Stat'
+export interface CompanyProps {
   id: string
   name: string
   email: string
   password: string
-  cards: Card[]
-  ads: Ad[]
-  stats: Stat[]
+  logo: string
+  cards: CardProps[]
+  ads: AdProps[]
+  stats: StatProps[]
   employeeId: string
 }

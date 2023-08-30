@@ -1,7 +1,7 @@
-import { User } from './User'
-export interface Stat {
+import { UserProps } from './User'
+export interface StatProps {
   id: string
-  customer: User
+  customer: UserProps
   customerId: string
   company: string
   companyId: string

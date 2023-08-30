@@ -1,10 +1,16 @@
-import { Header } from '../../../../components/Header'
+import { HeaderTw } from '../../../../components/HeaderTw'
+import BackToTop from '../../../../components/BackToTop'
 
 export function Dashboard() {
   return (
-    <div>
-      <Header title={'Empresa'} />
-      <h1>Tela inicial do proprietário</h1>
+    <div className="flex">
+      <div>
+        <HeaderTw />
+      </div>
+      <section>
+        <h1>Tela inicial do propietario</h1>
+        <BackToTop />
+      </section>
     </div>
   )
 }

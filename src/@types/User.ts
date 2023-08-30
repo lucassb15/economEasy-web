@@ -1,9 +1,9 @@
-import { Card } from './Card'
-export interface User {
+import { CardProps } from './Card'
+export interface UserProps {
   id: string
   name: string
   email: string
   password: string
-  cards: Card[]
+  cards: CardProps[]
   isEmployee: boolean
 }
