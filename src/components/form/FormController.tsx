@@ -17,21 +17,21 @@ export function FormController({ page }: FormControllerProps) {
         />
       ) : null}
 
-      {page === 'register/user' && (
+      {page === 'register/user' ? (
         <FormRegisterUser
           FormTitle="Cadastro"
           FormSubtitle="Por favor insira suas informações"
           SubmitText="Cadastrar"
         />
-      )}
+      ) : null}
 
-      {page === 'register/company' && (
+      {page === 'register/company' ? (
         <FormRegisterCompany
           FormTitle="Cadastro Empresa"
           FormSubtitle="Por favor insira suas informações"
           SubmitText="Cadastrar"
         />
-      )}
+      ) : null}
     </>
   )
 }
