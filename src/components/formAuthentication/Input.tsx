@@ -13,12 +13,22 @@ interface InputProps {
   setValue?: (value: string) => void
   icon?: ReactNode
   error?: FieldError
+  disabled?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { type = 'text', placeholder, value, setValue, icon, error, ...rest },
+  {
+    type = 'text',
+    placeholder,
+    value,
+    setValue,
+    icon,
+    error,
+    disabled,
+    ...rest
+  },
   ref,
 ) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +59,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           placeholder={placeholder}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          disabled={disabled}
           {...rest}
         />
       </div>

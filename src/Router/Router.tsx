@@ -6,6 +6,7 @@ import { RegisterUser } from '../views/authentication/user'
 import { RegisterCompany } from '../views/authentication/company'
 import { Home } from '../views/userView/user'
 import { Dashboard } from '../views/companyView/company/dashboard'
+import { Ads } from '../views/companyView/company/ads'
 export function Router() {
   return (
     <Routes>
@@ -17,6 +18,7 @@ export function Router() {
           </PrivateRouteUser>
         }
       />
+
       <Route
         path="/company/dashboard"
         element={
@@ -25,6 +27,16 @@ export function Router() {
           </PrivateRouteCompany>
         }
       />
+
+      <Route
+        path="/company/ads"
+        element={
+          <PrivateRouteCompany>
+            <Ads />
+          </PrivateRouteCompany>
+        }
+      />
+
       <Route path="/signin" element={<SignIn />} />
       <Route path="/register/user" element={<RegisterUser />} />
       <Route path="/register/company" element={<RegisterCompany />} />

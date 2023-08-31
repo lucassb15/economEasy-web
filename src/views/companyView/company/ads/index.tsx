@@ -5,9 +5,10 @@ import { useCallback, useContext, useState } from 'react'
 // import { api } from '@api/api'
 import { Gauge, List, Megaphone, SignOut } from '@phosphor-icons/react'
 import { AuthContext } from '@contexts/AuthContext'
+import { FormCompanyAds } from '@components/formCompany/FormCompanyAds'
 import { Link } from 'react-router-dom'
 
-export function Dashboard() {
+export function Ads() {
   // const { id } = useParams<{ id: string }>()
   // const [company, setCompany] = useState<CompanyProps | null>(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -82,7 +83,9 @@ export function Dashboard() {
           <div className=" flex-1 text-2xl font-bold">
             Dashboard do <span className="text-blue-500"> {user?.name}</span>
           </div>
-          <div>Inserir dados para o propietário visualizar</div>
+          <div>
+            <FormCompanyAds />
+          </div>
         </div>
       </div>
 
