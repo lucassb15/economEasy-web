@@ -4,8 +4,6 @@ export default {
   content: [
     './src/**/*.{ts,tsx,html,js,jsx}',
     './node_modules/tw-elements-react/dist/js/**/*.js',
-    '/node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}',
-    '/node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -22,5 +20,4 @@ export default {
     },
   },
   darkMode: 'class',
-  plugins: [require('tw-elements-react/dist/plugin.cjs')],
 }

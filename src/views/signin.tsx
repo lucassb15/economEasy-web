@@ -4,7 +4,7 @@ import HeroPeople from '../assets/test.png'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 import { Roles } from '../@types/Roles'
-import { FormController } from '../components/form/FormController'
+import { FormController } from '../components/formAuthentication/FormController'
 export function SignIn() {
   const { isAuthenticated, user } = useContext(AuthContext)
 
