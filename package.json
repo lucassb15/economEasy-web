@@ -11,9 +11,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.3.0",
     "@material-tailwind/react": "^2.1.1",
+    "@mui/icons-material": "^5.14.7",
+    "@mui/material": "^5.14.7",
     "@phosphor-icons/react": "^2.0.10",
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",

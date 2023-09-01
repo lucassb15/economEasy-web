@@ -7,11 +7,11 @@ import { Button } from '@components/Button'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function FormCompanyAds({ onSubmit }: any) {
-  const [image, setImage] = useState('')
+  const { user } = useContext(AuthContext)
+  const [image, setImage] = useState<File | null>(null)
   const [productName, setProductName] = useState('')
   const [price, setPrice] = useState('')
-  const [companyName, setCompanyName] = useState('')
-  const { user } = useContext(AuthContext)
+  const [companyName, setCompanyName] = useState(user?.name || '')
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (e: any) => {
@@ -22,11 +22,18 @@ export function FormCompanyAds({ onSubmit }: any) {
     const formData = new FormData()
     formData.append('name', productName)
     formData.append('price', price)
-    formData.append('image', image)
     formData.append('company', companyName)
-
+    if (image) {
+      formData.append('image', image)
+    }
+    console.log(companyName)
+    console.log(price)
+    console.log(productName)
+    console.log(image)
     try {
-      const response = await api.post('/create/ad', formData)
+      const response = await api.post('/create/ad', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       console.log(response.data)
       if (onSubmit) {
         onSubmit(response.data)
@@ -37,14 +44,22 @@ export function FormCompanyAds({ onSubmit }: any) {
   }
 
   return (
-    <div className="flex">
-      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+    <div className="flex flex-col items-start px-4 md:px-0">
+      <form
+        className="w-full md:w-2/3 lg:w-1/2 flex flex-col gap-5"
+        onSubmit={handleSubmit}
+      >
         <div>
           <label htmlFor="Imagem">Imagem do produto</label>
           <Input
+            // eslint-disable-next-line jsx-a11y/alt-text
             icon={<Image size={24} />}
             type="file"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                setImage(e.target.files[0])
+              }
+            }}
           />
         </div>
 
@@ -76,7 +91,7 @@ export function FormCompanyAds({ onSubmit }: any) {
             icon={<Buildings size={24} />}
             type="text"
             placeholder="Nome da empresa"
-            value={user?.name}
+            value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             disabled={true}
           />
