@@ -5,10 +5,12 @@ import { useCallback, useContext, useState } from 'react'
 // import { api } from '@api/api'
 import { Gauge, List, Megaphone, SignOut } from '@phosphor-icons/react'
 import { AuthContext } from '@contexts/AuthContext'
-import { FormCompanyAds } from '@components/formCompany/FormCompanyAds'
 import { Link } from 'react-router-dom'
 import ToggleColorMode from '@components/ToggleColorMode'
-import { TextField } from '@mui/material'
+import { FormController } from '@components/formAuthentication/FormController'
+import AdList from '@components/formCompany/AdList'
+import { AdsProvider } from '@contexts/AdsContext'
+// import { TextField } from '@mui/material'
 
 export function Ads() {
   // const { id } = useParams<{ id: string }>()
@@ -58,7 +60,7 @@ export function Ads() {
             Dashboard do <span className="text-blue-500"> {user?.name}</span>
           </div>
           <div>
-            <FormCompanyAds />
+            <FormController page="company/ads" />
           </div>
         </div>
 
@@ -91,11 +93,21 @@ export function Ads() {
         </aside>
         {/* Aqui fazer a importação e criação da dashboard */}
         <div className="hidden md:block mx-2 md:mx-5 flex-1 p-10">
-          <div className=" flex-1 text-2xl font-bold">
+          <div className="flex-1 text-2xl font-bold">
             Dashboard do <span className="text-blue-500"> {user?.name}</span>
           </div>
           <div>
-            <FormCompanyAds />
+            <FormController page="company/ads" />
+          </div>
+        </div>
+        <div className='flex-1 text-2xl font-bold"'>
+          <div className="hidden md:block mx-2 md:mx-5 flex-1 p-10">
+            <div className="flex-1 text-2xl font-bold">Anúncios criados</div>
+            <div>
+              <AdsProvider>
+                <AdList />
+              </AdsProvider>
+            </div>
           </div>
         </div>
       </div>

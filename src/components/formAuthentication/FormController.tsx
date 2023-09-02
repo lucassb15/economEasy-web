@@ -1,6 +1,8 @@
+import { FormCompanyAds } from '@components/formCompany/FormCompanyAds'
 import { FormLogin } from './FormLogin'
 import { FormRegisterCompany } from './FormRegisterCompany'
 import { FormRegisterUser } from './FormRegisterUser'
+import { AdsProvider } from '@contexts/AdsContext'
 
 type FormControllerProps = {
   page: string
@@ -31,6 +33,12 @@ export function FormController({ page }: FormControllerProps) {
           FormSubtitle="Por favor insira suas informações"
           SubmitText="Cadastrar"
         />
+      ) : null}
+
+      {page === 'company/ads' ? (
+        <AdsProvider>
+          <FormCompanyAds FormTitle="Cadastro Anúncio" />
+        </AdsProvider>
       ) : null}
     </>
   )

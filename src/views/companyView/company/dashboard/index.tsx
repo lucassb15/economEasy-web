@@ -6,6 +6,7 @@ import { useCallback, useContext, useState } from 'react'
 import { Gauge, List, Megaphone, SignOut } from '@phosphor-icons/react'
 import { AuthContext } from '@contexts/AuthContext'
 import { Link } from 'react-router-dom'
+import ToggleColorMode from '@components/ToggleColorMode'
 
 export function Dashboard() {
   // const { id } = useParams<{ id: string }>()
@@ -55,6 +56,7 @@ export function Dashboard() {
           className={`bg-neutral-800 text-white w-64 h-screen space-y-6 py-5 px-2 md:flex md:flex-col md:min-h-screen transform transition-transform duration-300 ease-in-out 
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
         >
+          <ToggleColorMode></ToggleColorMode>
           <Link
             className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
             to={'/company/dashboard'}

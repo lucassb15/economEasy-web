@@ -1,102 +1,92 @@
-import { Image, Package, Money, Buildings } from '@phosphor-icons/react'
-import { api } from '@api/api'
-import { Input } from '@components/formAuthentication/Input'
+import { useContext } from 'react'
+import { AdsContext } from '../../contexts/AdsContext' // Importar o contexto correto
 import { AuthContext } from '@contexts/AuthContext'
-import { useContext, useState } from 'react'
-import { Button } from '@components/Button'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function FormCompanyAds({ onSubmit }: any) {
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { adSchema } from '../../schemas/ad.schema' // Importar o esquema correto
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { Image, Package, Money, StarOfDavid } from '@phosphor-icons/react'
+import { Input } from '@components/formAuthentication/Input'
+
+interface FormProps {
+  FormTitle: string
+}
+
+interface AdFormData {
+  name: string
+  price: number
+  image: FileList
+  companyId: string
+}
+
+export function FormCompanyAds({ FormTitle }: FormProps) {
   const { user } = useContext(AuthContext)
-  const [image, setImage] = useState<File | null>(null)
-  const [productName, setProductName] = useState('')
-  const [price, setPrice] = useState('')
-  const [companyName, setCompanyName] = useState(user?.name || '')
+  const { createAd } = useContext(AdsContext)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (e: any) => {
-    e.preventDefault()
+  const { register, handleSubmit, formState } = useForm<AdFormData>({
+    resolver: zodResolver(adSchema),
+  })
+  const { errors } = formState
 
-    // Prepare os dados. Se "image" for um arquivo, você precisará
-    // usar FormData para enviar como parte da requisição.
-    const formData = new FormData()
-    formData.append('name', productName)
-    formData.append('price', price)
-    formData.append('company', companyName)
-    if (image) {
-      formData.append('image', image)
-    }
-    console.log(companyName)
-    console.log(price)
-    console.log(productName)
-    console.log(image)
-    try {
-      const response = await api.post('/create/ad', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-      console.log(response.data)
-      if (onSubmit) {
-        onSubmit(response.data)
-      }
-    } catch (error) {
-      console.error('Erro ao enviar os dados do anúncio.', error)
-    }
+  const onSubmit: SubmitHandler<AdFormData> = async (data) => {
+    console.log('Formulário enviado com os seguintes dados:', data)
+    await createAd({
+      name: data.name,
+      price: data.price,
+      image: data.image[0],
+      companyId: data.companyId,
+    })
   }
 
   return (
-    <div className="flex flex-col items-start px-4 md:px-0">
+    <div className="flex-1 max-w-[400px] mt-2">
+      <div>{FormTitle}</div>
       <form
-        className="w-full md:w-2/3 lg:w-1/2 flex flex-col gap-5"
-        onSubmit={handleSubmit}
+        className="w-full flex flex-col gap-5"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <div>
-          <label htmlFor="Imagem">Imagem do produto</label>
-          <Input
-            // eslint-disable-next-line jsx-a11y/alt-text
-            icon={<Image size={24} />}
-            type="file"
-            onChange={(e) => {
-              if (e.target.files && e.target.files.length > 0) {
-                setImage(e.target.files[0])
-              }
-            }}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="Nome Produto">Nome do produto</label>
-          <Input
-            icon={<Package size={24} />}
-            type="text"
-            placeholder="Nome do produto"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="Preço">Preço do produto</label>
-          <Input
-            icon={<Money size={24} />}
-            type="text"
-            placeholder="Valor"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </div>
-
-        <div className="select-none">
-          <label htmlFor="Nome Empresa">Nome da empresa</label>
-          <Input
-            icon={<Buildings size={24} />}
-            type="text"
-            placeholder="Nome da empresa"
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
-            disabled={true}
-          />
-        </div>
-        <Button ButtonTitle="Criar Anúncio"></Button>
+        <Input
+          icon={<StarOfDavid size={24} weight="regular" />}
+          type="text"
+          placeholder="ID da Empresa"
+          value={user?.id}
+          {...register('companyId')}
+          error={errors.companyId}
+        />
+        <Input
+          icon={<Package size={24} weight="regular" />}
+          type="text"
+          placeholder="Nome do Anúncio"
+          {...register('name')}
+          error={errors.name}
+        />
+        <Input
+          icon={<Money size={24} weight="regular" />}
+          type="number"
+          placeholder="Preço"
+          {...register('price')}
+          error={errors.price}
+        />
+        <Input
+          icon={
+            <Image
+              alt="Icone para o input de adicionar imagem"
+              size={24}
+              weight="regular"
+            />
+          }
+          type="file"
+          {...register('image')}
+          error={errors.image}
+        />
+        <button
+          type="submit"
+          className="bg-darkblue hover:bg-darkblue-hover text-white font-bold text-sm md:text-base py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        >
+          Criar Anúncio
+        </button>
       </form>
     </div>
   )
