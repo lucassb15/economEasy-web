@@ -13,4 +13,13 @@ export default defineConfig({
       '@contexts': path.resolve(__dirname, 'src/contexts'),
     },
   },
+  server: {
+    fs: {
+      // Permite o acesso ao diretório de uploads e qualquer subdiretório
+      allow: [
+        'C:/Users/Lucas Barbosa/Documents/GitHub/fideleSe-backend/uploads',
+        'C:/Users/Lucas Barbosa/Documents/GitHub/fideleSe-web/src',
+      ],
+    },
+  },
 })

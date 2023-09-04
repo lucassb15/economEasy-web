@@ -100,14 +100,12 @@ export function Ads() {
             <FormController page="company/ads" />
           </div>
         </div>
-        <div className='flex-1 text-2xl font-bold"'>
-          <div className="hidden md:block mx-2 md:mx-5 flex-1 p-10">
-            <div className="flex-1 text-2xl font-bold">Anúncios criados</div>
-            <div>
-              <AdsProvider>
-                <AdList />
-              </AdsProvider>
-            </div>
+        <div className="hidden md:block mx-2 md:mx-5 flex-1 p-10 overflow-y-auto h-screen">
+          <div className="flex-1 text-2xl font-bold">Anúncios criados</div>
+          <div className="flex flex-row gap-3">
+            <AdsProvider>
+              <AdList />
+            </AdsProvider>
           </div>
         </div>
       </div>
