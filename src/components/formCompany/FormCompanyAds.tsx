@@ -52,7 +52,7 @@ export function FormCompanyAds({ FormTitle }: FormProps) {
   const inputTextColor = useColorModeValue('black', 'white')
   const bgColor = useColorModeValue('#F3F8FF', '#262626')
   const textColor = useColorModeValue('black', 'white')
-  const highlightColor = useColorModeValue('#64B5F6', '#FFA726')
+  const highlightColor = useColorModeValue('#3182ce', '#3182ce')
 
   return (
     <Flex

@@ -21,6 +21,7 @@ import {
   AlertTitle,
   AlertDescription,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
 
@@ -28,6 +29,7 @@ function AdList() {
   const { ads, fetchAds, error } = useContext(AdsContext)
 
   const [activePopover, setActivePopover] = useState<string | null>(null)
+  const { onOpen, onClose } = useDisclosure()
 
   const imageSize = useBreakpointValue({
     base: '50px',
@@ -62,68 +64,102 @@ function AdList() {
     console.log(activePopover)
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const bgColor = useColorModeValue('white', '#262626')
 
   return (
-    <VStack spacing={4} w="full">
+    <VStack spacing={4} w="full" align="start">
       {ads.map((ad) => (
         <Box
           key={ad.id}
+          position="relative"
           borderWidth="1px"
           borderRadius="lg"
           w="full"
+          maxW={{ base: '100%', sm: '320px', md: '300px' }}
+          maxHeight="400px"
           p={4}
           boxShadow="md"
           bg={bgColor}
+          _hover={{ transform: 'scale(1.05)', boxShadow: 'xl' }}
+          transition="all 0.3s ease-in-out"
         >
           <Flex
-            justifyContent="space-between"
-            alignItems="start"
-            flexDir={{ base: 'column', md: 'row' }}
+            justifyContent="start"
+            alignItems="center"
+            flexDir={{ base: 'row', md: 'row' }}
           >
-            <VStack spacing={2} mb={{ base: 4, md: 0 }}>
+            <VStack spacing={2} mb={{ base: 4, md: 0 }} align="start">
               <Image
                 boxSize={imageSize}
                 objectFit="cover"
                 src={`http://localhost:3333/${ad.image}`}
                 alt={ad.name}
+                borderRadius="lg"
+                _hover={{ opacity: 0.8 }}
+                mb={2}
               />
-              <Text fontWeight="bold">{ad.name}</Text>
-              <Text>Preço: {ad.price}</Text>
+              <Text
+                fontWeight="bold"
+                fontSize="xl"
+                isTruncated
+                w="100%"
+                textAlign="left"
+                maxW="250px"
+              >
+                {ad.name}
+              </Text>
+              <Text fontSize="lg" textAlign="left">
+                Preço: {ad.price}
+              </Text>
             </VStack>
-
-            <Popover
-              isOpen={activePopover === ad.id}
-              onClose={() => setActivePopover(null)}
-              closeOnBlur={false}
-              placement="left"
-            >
-              <PopoverTrigger>
-                <IconButton
-                  aria-label="Options"
-                  icon={<CloseIcon />}
-                  onClick={() => setActivePopover(ad.id ?? null)}
-                />
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Confirmação!</PopoverHeader>
-                <PopoverBody>
-                  Tem certeza de que deseja excluir este anúncio?
-                  <Flex justifyContent="space-between" mt={4}>
-                    <Button
-                      colorScheme="green"
-                      onClick={() => setActivePopover(null)}
-                    >
-                      Não
-                    </Button>
-                    <Button colorScheme="red">Sim</Button>
-                  </Flex>
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
           </Flex>
+
+          <Popover
+            isOpen={activePopover === ad.id}
+            onClose={() => {
+              setActivePopover(null)
+              onClose()
+            }}
+            closeOnBlur={false}
+            placement="top-end"
+          >
+            <PopoverTrigger>
+              <IconButton
+                position="absolute"
+                top={2}
+                right={2}
+                aria-label="Options"
+                icon={<CloseIcon />}
+                onClick={() => {
+                  setActivePopover(ad.id ?? null)
+                  onOpen()
+                }}
+                variant="outline"
+                colorScheme="red"
+              />
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>Confirmação!</PopoverHeader>
+              <PopoverBody>
+                Tem certeza de que deseja excluir este anúncio?
+                <Flex justifyContent="space-between" mt={4}>
+                  <Button
+                    colorScheme="green"
+                    onClick={() => {
+                      setActivePopover(null)
+                      onClose()
+                    }}
+                  >
+                    Não
+                  </Button>
+                  <Button colorScheme="red">Sim</Button>
+                </Flex>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
         </Box>
       ))}
     </VStack>

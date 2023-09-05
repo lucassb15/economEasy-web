@@ -13,8 +13,8 @@ export function Ads() {
           <FormController page="company/ads" />
         </div>
       </div>
-      <div className="hidden md:block mx-2 md:mx-5 flex-1 p-10 overflow-y-auto h-screen ">
-        <div className="flex flex-row gap-3">
+      <div className="hidden md:block mx-2 md:mx-5 flex-1 p-10 overflow-y-auto h-screen">
+        <div className="flex flex-row flex-wrap gap-3">
           <AdsProvider>
             <AdList />
           </AdsProvider>
