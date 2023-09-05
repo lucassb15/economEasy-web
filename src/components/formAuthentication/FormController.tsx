@@ -37,7 +37,7 @@ export function FormController({ page }: FormControllerProps) {
 
       {page === 'company/ads' ? (
         <AdsProvider>
-          <FormCompanyAds FormTitle="Cadastro Anúncio" />
+          <FormCompanyAds FormTitle="Cadastro de Anúncio" />
         </AdsProvider>
       ) : null}
     </>

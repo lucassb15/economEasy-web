@@ -16,6 +16,7 @@ interface InputProps {
   disabled?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
+  color?: string
 }
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   {
@@ -26,6 +27,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     icon,
     error,
     disabled,
+    color,
     ...rest
   },
   ref,
@@ -39,18 +41,20 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       <div
         className={`flex items-center border rounded-sm transition-colors duration-300 ${
           isFocused ? 'border-blue-300 ring-1' : 'border-gray-300'
-        } bg-white dark:bg-gray-800`} // Adicionado dark:bg-gray-800
+        } bg-white dark:bg-gray-800`}
       >
         <div
           className={`text-gray-500 px-2 py-2 bg-white border-r transition-colors duration-300 dark:bg-gray-800 dark:text-white ${
             isFocused ? 'border-blue-300' : 'border-gray-300'
-          }`} // Adicionado dark:bg-gray-800 e dark:text-white
+          }`}
         >
           {icon}
         </div>
         <input
           ref={ref}
-          className="flex-grow py-2 px-2 border-none outline-none rounded-r text-black dark:text-white" // Adicionado text-black e dark:text-white
+          className={`flex-grow py-2 px-2 border-none outline-none rounded-r ${
+            color || 'text-black dark:text-white'
+          }`}
           type={type}
           value={value}
           onChange={handleInputChange}

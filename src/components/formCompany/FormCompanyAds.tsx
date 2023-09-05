@@ -1,14 +1,23 @@
 import { useContext } from 'react'
-import { AdsContext } from '../../contexts/AdsContext' // Importar o contexto correto
+import { AdsContext } from '../../contexts/AdsContext'
 import { AuthContext } from '@contexts/AuthContext'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-
-import { adSchema } from '../../schemas/ad.schema' // Importar o esquema correto
+import { adSchema } from '../../schemas/ad.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Image, Package, Money, StarOfDavid } from '@phosphor-icons/react'
 import { Input } from '@components/formAuthentication/Input'
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  VStack,
+  useColorModeValue,
+} from '@chakra-ui/react'
 
 interface FormProps {
   FormTitle: string
@@ -40,54 +49,83 @@ export function FormCompanyAds({ FormTitle }: FormProps) {
     })
   }
 
+  const inputTextColor = useColorModeValue('black', 'white')
+  const bgColor = useColorModeValue('#F3F8FF', '#262626')
+  const textColor = useColorModeValue('black', 'white')
+  const highlightColor = useColorModeValue('#64B5F6', '#FFA726')
+
   return (
-    <div className="flex-1 max-w-[400px] mt-2">
-      <div>{FormTitle}</div>
-      <form
-        className="w-full flex flex-col gap-5"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Input
-          icon={<StarOfDavid size={24} weight="regular" />}
-          type="text"
-          placeholder="ID da Empresa"
-          value={user?.id}
-          {...register('companyId')}
-          error={errors.companyId}
-        />
-        <Input
-          icon={<Package size={24} weight="regular" />}
-          type="text"
-          placeholder="Nome do Anúncio"
-          {...register('name')}
-          error={errors.name}
-        />
-        <Input
-          icon={<Money size={24} weight="regular" />}
-          type="number"
-          placeholder="Preço"
-          {...register('price')}
-          error={errors.price}
-        />
-        <Input
-          icon={
-            <Image
-              alt="Icone para o input de adicionar imagem"
-              size={24}
-              weight="regular"
-            />
-          }
-          type="file"
-          {...register('image')}
-          error={errors.image}
-        />
-        <button
-          type="submit"
-          className="bg-darkblue hover:bg-darkblue-hover text-white font-bold text-sm md:text-base py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
+    <Flex
+      flexDirection="column"
+      w="full"
+      maxW="400px"
+      mt={0}
+      bgColor={bgColor}
+      color={textColor}
+      p={4}
+      borderRadius="md"
+      boxShadow="sm"
+    >
+      <Heading size="md" mb={4}>
+        {FormTitle}
+      </Heading>
+      <VStack as="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
+        <FormControl isInvalid={Boolean(errors.companyId)}>
+          <FormLabel htmlFor="companyId">ID da Empresa</FormLabel>
+          <Input
+            icon={
+              <StarOfDavid size={24} color={highlightColor} weight="regular" />
+            }
+            type="text"
+            placeholder="ID da Empresa"
+            value={user?.id}
+            color={inputTextColor}
+            {...register('companyId')}
+          />
+          <FormErrorMessage>{errors.companyId?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={Boolean(errors.name)}>
+          <FormLabel htmlFor="name">Nome do Anúncio</FormLabel>
+          <Input
+            icon={<Package size={24} color={highlightColor} weight="regular" />}
+            type="text"
+            placeholder="Nome do Anúncio"
+            color={inputTextColor}
+            {...register('name')}
+          />
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={Boolean(errors.price)}>
+          <FormLabel htmlFor="price">Preço</FormLabel>
+          <Input
+            icon={<Money size={24} color={highlightColor} weight="regular" />}
+            type="number"
+            placeholder="Preço"
+            color={inputTextColor}
+            {...register('price')}
+          />
+          <FormErrorMessage>{errors.price?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={Boolean(errors.image)}>
+          <FormLabel htmlFor="image">Imagem</FormLabel>
+          <Input
+            icon={
+              <Image
+                color={highlightColor}
+                alt="Icone para o input de adicionar imagem"
+                size={24}
+                weight="regular"
+              />
+            }
+            type="file"
+            {...register('image')}
+          />
+          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
+        </FormControl>
+        <Button type="submit" colorScheme="blue">
           Criar Anúncio
-        </button>
-      </form>
-    </div>
+        </Button>
+      </VStack>
+    </Flex>
   )
 }
