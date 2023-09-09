@@ -8,6 +8,7 @@ import { signInSchema } from '../../schemas/user.schema'
 import Logo from '../../assets/Logo.svg'
 import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react'
 import { Input } from './Input'
+import { useColorModeValue } from '@chakra-ui/react'
 
 interface FormProps {
   FormTitle: string
@@ -32,8 +33,17 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
     await signIn(data)
   }
 
+  const inputTextColor = useColorModeValue('black', 'white')
+  const bgColor = useColorModeValue('gray.50', 'gray.100')
+  const textColor = useColorModeValue('gray.50', 'gray.50')
+  const borderColor = useColorModeValue('gray.300', 'gray.700')
+  const hoverColor = useColorModeValue('blue.500', 'blue.300')
+
   return (
-    <div className="flex flex-col md:overflow-y-auto custom-scrollbar h-screen p-4 items-center sm:p-10 md:p-20 lg:p-20 gap-y-5 justify-center w-full md:w-1/2">
+    <div
+      className="flex flex-col md:overflow-y-auto custom-scrollbar h-screen p-4 items-center sm:p-10 md:p-20 lg:p-20 gap-y-5 justify-center w-full md:w-1/2"
+      style={{ backgroundColor: bgColor, color: textColor }}
+    >
       <div className="text-xl font-semibold pt-10">
         <img className="w-max h-[30px] object-cover" src={Logo} alt="Hero" />
       </div>
@@ -46,11 +56,13 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
       <form
         className="w-full flex flex-col gap-5"
         onSubmit={handleSubmit(onSubmit)}
+        style={{ borderColor }}
       >
         <Input
           icon={<Envelope size={24} weight="thin" />}
           type="email"
           placeholder="E-mail"
+          color={inputTextColor}
           {...register('email')}
           error={errors.email}
         />
@@ -58,12 +70,13 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
           icon={<LockKey size={24} weight="thin" />}
           type="password"
           placeholder="Senha"
+          color={inputTextColor}
           {...register('password')}
           error={errors.password}
         />
         <button
           type="submit"
-          className="bg-darkblue hover:bg-darkblue-hover text-white font-bold text-sm md:text-base py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          className={`bg-darkblue hover:bg-darkblue-hover text-white font-bold text-sm md:text-base py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-${hoverColor} focus:ring-opacity-50`}
         >
           {SubmitText}
         </button>
@@ -82,13 +95,15 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
         <p className="text-sm font-medium text-gray-500">OU</p>
         <hr className="border border-gray-300 w-full" />
       </div>
-      <button className="bg-darkblue hover:bg-darkblue-hover w-full flex-row flex items-center justify-center gap-3 text-white font-bold py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+      <button
+        className={`bg-darkblue hover:bg-darkblue-hover w-full flex-row flex items-center justify-center gap-3 text-white font-bold py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-${hoverColor} focus:ring-opacity-50`}
+      >
         <GoogleLogo size={20} weight="bold" />
         <h3 className="text-sm md:text-base">Logar-se com Google</h3>
       </button>
       <div className="flex items-center justify-start flex-col">
         <div className="w-full flex mt-5">
-          <p className="text-xs md:text-sm font-normal text-black">
+          <p className="text-xs md:text-sm font-normal">
             Não tem conta?
             <Link
               to="/register/user"
@@ -100,7 +115,7 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
           </p>
         </div>
         <div className="w-full flex mt-5">
-          <p className="text-xs md:text-sm font-normal text-black">
+          <p className={`text-xs md:text-sm font-normal ${textColor}`}>
             É proprietário?
             <Link
               to="/register/company"

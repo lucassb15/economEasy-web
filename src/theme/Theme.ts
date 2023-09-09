@@ -2,7 +2,7 @@ import { extendTheme } from '@chakra-ui/react'
 
 const Theme = extendTheme({
   config: {
-    initialColorMode: 'light',
+    initialColorMode: 'dark',
     useSystemColorMode: false,
   },
   styles: {
@@ -27,17 +27,6 @@ const Theme = extendTheme({
         solid: (props: { colorMode: string }) => ({
           bg: props.colorMode === 'dark' ? '#3182CE' : '#E2E8F0',
           color: props.colorMode === 'dark' ? '#FFFFFF' : '#2D3748',
-          _hover: {
-            bg: props.colorMode === 'dark' ? '#2B6CB0' : '#CBD5E0',
-          },
-        }),
-        outline: (props: { colorMode: string }) => ({
-          borderColor: props.colorMode === 'dark' ? '#3182CE' : '#E2E8F0',
-          color: props.colorMode === 'dark' ? '#3182CE' : '#E2E8F0',
-          _hover: {
-            bg: props.colorMode === 'dark' ? '#3182CE' : '#E2E8F0',
-            color: props.colorMode === 'dark' ? '#FFFFFF' : '#2D3748',
-          },
         }),
       },
     },
@@ -71,6 +60,26 @@ const Theme = extendTheme({
           borderColor: props.colorMode === 'dark' ? '#4A5568' : '#CBD5E0',
         },
         _focus: {
+          borderColor: props.colorMode === 'dark' ? '#3182CE' : '#3182CE',
+          boxShadow: `0 0 0 1px ${
+            props.colorMode === 'dark' ? '#3182CE' : '#3182CE'
+          }`,
+        },
+      }),
+    },
+    variants: {
+      file: (props: { colorMode: string }) => ({
+        display: 'flex',
+        alignItems: 'center',
+        padding: '8px',
+        borderRadius: '8px',
+        border: `2px solid ${
+          props.colorMode === 'dark' ? '#3182CE' : '#E2E8F0'
+        }`,
+        _hover: {
+          borderColor: props.colorMode === 'dark' ? '#2B6CB0' : '#CBD5E0',
+        },
+        _focusWithin: {
           borderColor: props.colorMode === 'dark' ? '#3182CE' : '#3182CE',
           boxShadow: `0 0 0 1px ${
             props.colorMode === 'dark' ? '#3182CE' : '#3182CE'

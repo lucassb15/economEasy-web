@@ -24,9 +24,12 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
+import { XCircle } from '@phosphor-icons/react'
+import toast from 'react-hot-toast'
+import colors from 'tailwindcss/colors'
 
 function AdList() {
-  const { ads, fetchAds, error } = useContext(AdsContext)
+  const { ads, fetchAds, deleteAd, error } = useContext(AdsContext)
 
   const [activePopover, setActivePopover] = useState<string | null>(null)
   const { onOpen, onClose } = useDisclosure()
@@ -34,7 +37,7 @@ function AdList() {
   const imageSize = useBreakpointValue({
     base: '50px',
     sm: '75px',
-    md: '100px',
+    md: '200px',
   })
 
   useEffect(() => {
@@ -77,6 +80,7 @@ function AdList() {
           borderRadius="lg"
           w="full"
           maxW={{ base: '100%', sm: '320px', md: '300px' }}
+          h="max"
           maxHeight="400px"
           p={4}
           boxShadow="md"
@@ -108,9 +112,6 @@ function AdList() {
                 maxW="250px"
               >
                 {ad.name}
-              </Text>
-              <Text fontSize="lg" textAlign="left">
-                Preço: {ad.price}
               </Text>
             </VStack>
           </Flex>
@@ -155,7 +156,34 @@ function AdList() {
                   >
                     Não
                   </Button>
-                  <Button colorScheme="red">Sim</Button>
+                  <Button
+                    colorScheme="red"
+                    onClick={() => {
+                      if (ad.id) {
+                        deleteAd(ad.id)
+                      } else {
+                        toast.error('Erro ao buscar anúncios.', {
+                          position: 'top-right',
+                          style: {
+                            backgroundColor: colors.red[500],
+                            color: colors.white,
+                            fontSize: 16,
+                            fontWeight: 500,
+                            padding: 16,
+                          },
+                          icon: (
+                            <XCircle
+                              size={54}
+                              weight="fill"
+                              className="text-gray-50"
+                            />
+                          ),
+                        })
+                      }
+                    }}
+                  >
+                    Sim
+                  </Button>
                 </Flex>
               </PopoverBody>
             </PopoverContent>

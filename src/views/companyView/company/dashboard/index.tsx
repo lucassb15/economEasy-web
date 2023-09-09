@@ -1,6 +1,7 @@
 import { AuthContext } from '@contexts/AuthContext'
 import { MenuDashboard } from '@components/MenuDashboard'
 import { useContext } from 'react'
+import ChartPoints from '@components/chartCompany/chartPoints'
 
 export function Dashboard() {
   const { user } = useContext(AuthContext)
@@ -14,6 +15,9 @@ export function Dashboard() {
           Dashboard do <span className="text-blue-500"> {user?.name}</span>
         </div>
         <div>Inserir dados para o propietário visualizar</div>
+        <div>
+          <ChartPoints />
+        </div>
       </div>
     </div>
   )

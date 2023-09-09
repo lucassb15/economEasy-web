@@ -3,6 +3,8 @@ import { FormLogin } from './FormLogin'
 import { FormRegisterCompany } from './FormRegisterCompany'
 import { FormRegisterUser } from './FormRegisterUser'
 import { AdsProvider } from '@contexts/AdsContext'
+import { CardsProvider } from '@contexts/CardsContext'
+import { FormCompanyCards } from '@components/formCompany/FormCompanyCard'
 
 type FormControllerProps = {
   page: string
@@ -39,6 +41,12 @@ export function FormController({ page }: FormControllerProps) {
         <AdsProvider>
           <FormCompanyAds FormTitle="Cadastro de Anúncio" />
         </AdsProvider>
+      ) : null}
+
+      {page === 'company/cards' ? (
+        <CardsProvider>
+          <FormCompanyCards FormTitle="Configurar cartão" />
+        </CardsProvider>
       ) : null}
     </>
   )

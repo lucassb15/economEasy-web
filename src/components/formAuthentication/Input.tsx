@@ -39,12 +39,14 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   return (
     <div>
       <div
-        className={`flex items-center border rounded-sm transition-colors duration-300 ${
-          isFocused ? 'border-blue-300 ring-1' : 'border-gray-300'
-        } bg-white dark:bg-gray-800`}
+        className={`flex items-center rounded-sm transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 border ${
+          isFocused
+            ? 'border-blue-300 shadow-lg'
+            : 'border-gray-300 shadow-sm hover:shadow-md'
+        }`}
       >
         <div
-          className={`text-gray-500 px-2 py-2 bg-white border-r transition-colors duration-300 dark:bg-gray-800 dark:text-white ${
+          className={`text-gray-500 px-2 py-2 bg-white border-r transition-all duration-300 ease-in-out dark:bg-gray-800 dark:text-white ${
             isFocused ? 'border-blue-300' : 'border-gray-300'
           }`}
         >
