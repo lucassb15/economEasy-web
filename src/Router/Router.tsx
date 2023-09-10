@@ -6,6 +6,9 @@ import { RegisterUser } from '../views/authentication/user'
 import { RegisterCompany } from '../views/authentication/company'
 import { Home } from '../views/userView/user'
 import { Dashboard } from '../views/companyView/company/dashboard'
+import { Ads } from '../views/companyView/company/ads'
+import { Cards } from '../views/companyView/company/cards'
+import { RegisterEmployee } from '../views/companyView/company/employee'
 export function Router() {
   return (
     <Routes>
@@ -17,11 +20,39 @@ export function Router() {
           </PrivateRouteUser>
         }
       />
+
       <Route
         path="/company/dashboard"
         element={
           <PrivateRouteCompany>
             <Dashboard />
+          </PrivateRouteCompany>
+        }
+      />
+
+      <Route
+        path="/company/ads"
+        element={
+          <PrivateRouteCompany>
+            <Ads />
+          </PrivateRouteCompany>
+        }
+      />
+
+      <Route
+        path="/company/cards"
+        element={
+          <PrivateRouteCompany>
+            <Cards />
+          </PrivateRouteCompany>
+        }
+      />
+
+      <Route
+        path="/company/employee"
+        element={
+          <PrivateRouteCompany>
+            <RegisterEmployee />
           </PrivateRouteCompany>
         }
       />

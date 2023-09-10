@@ -11,6 +11,14 @@ import { api } from '../api/api'
 
 import { Roles } from '../@types/Roles'
 
+interface AxiosError {
+  response: {
+    data: {
+      message: string
+    }
+  }
+}
+
 interface signInCredentials {
   email: string
   password: string
@@ -31,6 +39,14 @@ interface RegisterCompanyProps {
   companyName: string
 }
 
+interface RegisterEmployeeProps {
+  companyId: string
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
 interface AuthContextProps {
   isAuthenticated: boolean
   loading: boolean
@@ -39,6 +55,7 @@ interface AuthContextProps {
   signIn: (data: signInCredentials) => Promise<void>
   registerUser: (data: RegisterUserProps) => Promise<void>
   registerCompany: (data: RegisterCompanyProps) => Promise<void>
+  registerEmployee: (data: RegisterEmployeeProps) => Promise<boolean>
   signOut: () => void
 }
 
@@ -52,7 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps | null>(null)
   const isAuthenticated = !!user
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   const navigate = useNavigate()
 
@@ -197,6 +214,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
   }
 
+  async function registerEmployee(
+    data: RegisterEmployeeProps,
+  ): Promise<boolean> {
+    try {
+      await api.post('/register/employee', data)
+      toast.success('Funcionário registrado com sucesso!', {})
+      return true
+    } catch (error) {
+      console.error(error)
+      toast.error((error as AxiosError).response.data.message, {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError((error as AxiosError).response.data.message)
+      return false
+    }
+  }
+
   async function signOut() {
     try {
       destroyCookie(null, 'fidelese.token')
@@ -216,6 +258,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signIn,
         registerUser,
         registerCompany,
+        registerEmployee,
         signOut,
         error,
       }}

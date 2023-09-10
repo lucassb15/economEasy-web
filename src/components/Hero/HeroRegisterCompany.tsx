@@ -1,5 +1,5 @@
 import HeroPeople from '../../assets/test.png'
-import { FormController } from '../form/FormController'
+import { FormController } from '../formAuthentication/FormController'
 
 export function HeroRegisterCompany() {
   return (

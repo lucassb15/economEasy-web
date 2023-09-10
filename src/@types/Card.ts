@@ -1,4 +1,4 @@
-export interface Card {
+export interface CardProps {
   id: string
   customerId: string
   companyId: string

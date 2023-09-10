@@ -1,9 +1,9 @@
-export interface Ad {
+export interface AdProps {
   id: string
   company: string
   companyId: string
   name: string
   price: number
-  image: string
+  image: File | null
   priority: boolean
 }

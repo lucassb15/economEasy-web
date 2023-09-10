@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import { AccessDenied } from '../views/acessDenied'
 import { Roles } from '../@types/Roles'
+import { Spinner } from '@chakra-ui/react'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PrivateRouteCompany({ children }: any) {
@@ -11,8 +12,8 @@ export function PrivateRouteCompany({ children }: any) {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        Carregando...
+      <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
+        <Spinner size="xl" />
       </div>
     )
   }

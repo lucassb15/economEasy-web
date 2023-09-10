@@ -2,25 +2,18 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Estilo do track (parte fixa) da scrollbar */
-::webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
 }
-
-/* Estilo do thumb (parte móvel) da scrollbar */
-::webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: #0e2a56;
   border-radius: 5px;
   transition: background-color 0.3s;
 }
-
-/* Estilo do thumb da scrollbar quando o mouse está sobre ele */
-::webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background-color: #133873;
 }
-
-/* Estilo do track da scrollbar */
-::webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 6px;
 }
