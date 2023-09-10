@@ -1,4 +1,11 @@
-import { Cards, Gauge, List, Megaphone, SignOut } from '@phosphor-icons/react'
+import {
+  Cards,
+  Gauge,
+  List,
+  Megaphone,
+  SignOut,
+  UserCirclePlus,
+} from '@phosphor-icons/react'
 import { Link } from 'react-router-dom'
 import DarkModeSwitch from '@components/DarkModeSwitch'
 import { AuthContext } from '@contexts/AuthContext'
@@ -56,6 +63,12 @@ export function MenuDashboard() {
           to="/company/cards"
         >
           <Cards size={24} />
+        </Link>
+        <Link
+          className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
+          to="/company/employee"
+        >
+          <UserCirclePlus size={24} />
         </Link>
         <button
           className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"

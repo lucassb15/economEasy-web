@@ -8,6 +8,7 @@ import { Home } from '../views/userView/user'
 import { Dashboard } from '../views/companyView/company/dashboard'
 import { Ads } from '../views/companyView/company/ads'
 import { Cards } from '../views/companyView/company/cards'
+import { RegisterEmployee } from '../views/companyView/company/employee'
 export function Router() {
   return (
     <Routes>
@@ -47,6 +48,14 @@ export function Router() {
         }
       />
 
+      <Route
+        path="/company/employee"
+        element={
+          <PrivateRouteCompany>
+            <RegisterEmployee />
+          </PrivateRouteCompany>
+        }
+      />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/register/user" element={<RegisterUser />} />
       <Route path="/register/company" element={<RegisterCompany />} />

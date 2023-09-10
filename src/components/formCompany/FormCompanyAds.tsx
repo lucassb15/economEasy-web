@@ -80,6 +80,7 @@ export function FormCompanyAds({ FormTitle }: FormProps) {
             placeholder="ID da Empresa"
             value={user?.id}
             color={inputTextColor}
+            error={errors.companyId}
             {...register('companyId')}
           />
           <FormErrorMessage>{errors.companyId?.message}</FormErrorMessage>
@@ -96,11 +97,11 @@ export function FormCompanyAds({ FormTitle }: FormProps) {
               />
             }
             type="file"
+            error={errors.image}
             {...register('image')}
           />
-          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
         </FormControl>
-        <Button type="submit" colorScheme="blue">
+        <Button type="submit" colorScheme="blue" w={'full'} mt={1}>
           Criar Anúncio
         </Button>
       </VStack>

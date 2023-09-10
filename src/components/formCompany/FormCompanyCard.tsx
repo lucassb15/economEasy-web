@@ -6,13 +6,12 @@ import { FormState, SubmitHandler, useForm } from 'react-hook-form'
 import { cardSchema } from '../../schemas/card.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Cards, Check, Image, StarOfDavid } from '@phosphor-icons/react'
+import { Cards, Check, Image } from '@phosphor-icons/react'
 import { Input } from '@components/formAuthentication/Input'
 import {
   Button,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
   VStack,
@@ -44,13 +43,14 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
     const success = await createCard({
       companyId: data.companyId,
       name: data.name,
-      maxPoints: parseInt(data.maxPoints, 10),
+
+      maxPoints: Math.floor(data.maxPoints),
       image: data.image[0],
     })
 
     // Recarregar a página apenas se a chamada à API for bem-sucedida
     if (success) {
-      window.location.reload()
+      setTimeout(() => window.location.reload(), 1000)
     }
   }
   const inputTextColor = useColorModeValue('black', 'white')
@@ -82,16 +82,12 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
         <FormControl hidden>
           <FormLabel htmlFor="companyId">ID da Empresa</FormLabel>
           <Input
-            icon={
-              <StarOfDavid size={24} color={highlightColor} weight="regular" />
-            }
             type="text"
             placeholder="ID da Empresa"
             value={user?.id}
-            color={inputTextColor}
+            error={errors.companyId}
             {...register('companyId', { value: companyId })}
           />
-          <FormErrorMessage>{errors.companyId?.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="name">Nome do Cartão</FormLabel>
@@ -100,9 +96,9 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
             type="text"
             placeholder="Nome do Cartão"
             color={inputTextColor}
+            error={errors.name}
             {...register('name')}
           />
-          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="maxPoints">Quantidade de Check-in</FormLabel>
@@ -111,9 +107,9 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
             type="number"
             placeholder="Quantidade de check-in"
             color={inputTextColor}
+            error={errors.maxPoints}
             {...register('maxPoints')}
           />
-          <FormErrorMessage>{errors.maxPoints?.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="image">Imagem</FormLabel>
@@ -127,11 +123,11 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
               />
             }
             type="file"
+            error={errors.image}
             {...register('image')}
           />
-          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
         </FormControl>
-        <Button type="submit" colorScheme="blue">
+        <Button type="submit" colorScheme="blue" w={'full'} mt={1}>
           Criar Cartão
         </Button>
       </VStack>

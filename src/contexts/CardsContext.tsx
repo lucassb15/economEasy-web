@@ -132,9 +132,6 @@ export function CardsProvider({ children }: CardsProviderProps) {
         } else {
           setCards([response.data])
         }
-      } else {
-        console.error('Response data is null')
-        setCards([]) // Definir um estado padrão quando a resposta é null
       }
     } catch (error) {
       console.error(error)

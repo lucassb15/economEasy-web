@@ -40,19 +40,11 @@ function CardList() {
     md: '200px',
   })
 
+  // renderiza os cards na tela
   useEffect(() => {
     fetchCards()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  useEffect(() => {
-    if (cards && cards.length > 0) {
-      console.log(
-        'Caminhos das imagens:',
-        cards.map((card) => card.image),
-      )
-    }
-  }, [cards])
 
   if (error) {
     return (
