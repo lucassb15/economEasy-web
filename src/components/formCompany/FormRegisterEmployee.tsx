@@ -28,7 +28,7 @@ interface EmployeeFormData {
 }
 
 export function FormRegisterEmployee({ FormTitle }: FormProps) {
-  const { registerEmployee, user } = useContext(AuthContext)
+  const { registerUser, user } = useContext(AuthContext)
   const companyId = user?.id ?? ''
   const { register, handleSubmit, formState } = useForm<EmployeeFormData>({
     resolver: zodResolver(employeeSchema),
@@ -36,18 +36,14 @@ export function FormRegisterEmployee({ FormTitle }: FormProps) {
   const { errors } = formState
 
   const onSubmit: SubmitHandler<EmployeeFormData> = async (data) => {
-    const success = await registerEmployee({
+    await registerUser({
       companyId: data.companyId,
       email: data.email,
       name: data.name,
       password: data.password,
       confirmPassword: data.confirmPassword,
+      isEmployee: true,
     })
-
-    // Recarregar a página apenas se a chamada à API for bem-sucedida
-    if (success) {
-      setTimeout(() => window.location.reload(), 1000)
-    }
   }
 
   // Debug erros
