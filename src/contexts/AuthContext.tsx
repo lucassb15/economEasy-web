@@ -11,6 +11,14 @@ import { api } from '../api/api'
 
 import { Roles } from '../@types/Roles'
 
+interface AxiosError {
+  response: {
+    data: {
+      message: string
+    }
+  }
+}
+
 interface signInCredentials {
   email: string
   password: string
@@ -21,6 +29,7 @@ interface UserProps {
   name: string
   email: string
   role: Roles
+  companyId?: string
 }
 
 interface RegisterUserProps {
@@ -40,10 +49,12 @@ interface AuthContextProps {
   isAuthenticated: boolean
   loading: boolean
   user: UserProps | null
+  employees: UserProps[]
   error: null | string
   signIn: (data: signInCredentials) => Promise<void>
   registerUser: (data: RegisterUserProps) => Promise<void>
   registerCompany: (data: RegisterCompanyProps) => Promise<void>
+  fetchEmployees: () => Promise<void>
   signOut: () => void
 }
 
@@ -58,6 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [employees, setEmployees] = useState<UserProps[]>([])
 
   const navigate = useNavigate()
 
@@ -108,7 +120,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (userLogged.role === Roles.Owner) {
           navigate('/company/dashboard')
         } else if (userLogged.role === Roles.Employee) {
-          navigate('/employee/dashboard') // Assumindo que você tem uma rota diferente para Employee
+          navigate('/employee') // Navigate employee
         } else {
           navigate('/home') // Para o papel "User" e qualquer outro caso
         }
@@ -213,6 +225,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
   }
 
+  const companyId = user?.id
+  async function fetchEmployees() {
+    try {
+      const response = await api.get(`/company/${companyId}/employees`)
+
+      if (response.data) {
+        setEmployees(
+          Array.isArray(response.data) ? response.data : [response.data],
+        )
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao buscar funcionários.', {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError(
+        (error as AxiosError).response?.data?.message || 'Erro desconhecido',
+      )
+    }
+  }
+
   async function signOut() {
     try {
       destroyCookie(null, 'fidelese.token')
@@ -232,8 +273,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signIn,
         registerUser,
         registerCompany,
+        fetchEmployees,
         signOut,
         error,
+        employees,
       }}
     >
       {children}

@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 export const employeeSchema = z
   .object({
+    companyId: z.string().min(1, 'ID da empresa é obrigatório'),
     name: z.string().min(3, 'Nome obrigatório'),
     email: z.string().nonempty('E-mail obrigatório').email('E-mail inválido'),
     password: z

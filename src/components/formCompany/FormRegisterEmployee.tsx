@@ -25,18 +25,19 @@ interface EmployeeFormData {
   name: string
   password: string
   confirmPassword: string
+  isEmployee: boolean
 }
 
 export function FormRegisterEmployee({ FormTitle }: FormProps) {
   const { registerUser, user } = useContext(AuthContext)
-  const companyId = user?.id ?? ''
+  const companyId = user?.id ?? 'error'
   const { register, handleSubmit, formState } = useForm<EmployeeFormData>({
     resolver: zodResolver(employeeSchema),
   })
   const { errors } = formState
-
+  console.log(companyId)
   const onSubmit: SubmitHandler<EmployeeFormData> = async (data) => {
-    await registerUser({
+    const dados = await registerUser({
       companyId: data.companyId,
       email: data.email,
       name: data.name,
@@ -44,6 +45,8 @@ export function FormRegisterEmployee({ FormTitle }: FormProps) {
       confirmPassword: data.confirmPassword,
       isEmployee: true,
     })
+
+    console.log(dados)
   }
 
   // Debug erros
@@ -87,6 +90,7 @@ export function FormRegisterEmployee({ FormTitle }: FormProps) {
             placeholder="ID da Empresa"
             value={user?.id}
             error={errors.companyId}
+            color={inputTextColor}
             {...register('companyId', { value: companyId })}
           />
         </FormControl>
