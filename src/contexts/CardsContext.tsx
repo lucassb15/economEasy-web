@@ -161,7 +161,10 @@ export function CardsProvider({ children }: CardsProviderProps) {
 
       setCards((prevCards) => prevCards.filter((card) => card.id !== cardId))
 
-      toast.success('Anúncio deletado com sucesso!')
+      toast.success('Cartão deletado com sucesso!')
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     } catch (error) {
       console.log(error)
       toast.error((error as AxiosError).response.data.message, {

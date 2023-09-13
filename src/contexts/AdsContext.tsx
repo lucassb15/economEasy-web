@@ -124,6 +124,9 @@ export function AdsProvider({ children }: AdsProviderProps) {
       setAds((prevAds) => prevAds.filter((ad) => ad.id !== adId))
 
       toast.success('Anúncio deletado com sucesso!')
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     } catch (error) {
       console.log(error)
       toast.error((error as AxiosError).response.data.message, {
