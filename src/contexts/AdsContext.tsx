@@ -27,6 +27,7 @@ interface AdsContextData {
   ads: AdProps[]
   createAd: (ad: AdProps) => Promise<boolean>
   fetchAds: () => Promise<void>
+  fetchAdsUser: () => Promise<void>
   deleteAd: (adId: string) => Promise<void>
   error: null | string
 }
@@ -35,6 +36,7 @@ export const AdsContext = createContext<AdsContextData>({
   ads: [],
   createAd: async () => false,
   fetchAds: async () => {},
+  fetchAdsUser: async () => {},
   deleteAd: async () => {},
   error: null,
 })
@@ -112,6 +114,27 @@ export function AdsProvider({ children }: AdsProviderProps) {
     }
   }
 
+  async function fetchAdsUser() {
+    try {
+      const response = await api.get(`/ads/`)
+      setAds(response.data)
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao buscar anúncios.', {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError((error as AxiosError).response.data.message)
+    }
+  }
+
   async function deleteAd(adId: string) {
     if (!adId) {
       console.error('Ad ID is undefined')
@@ -145,7 +168,9 @@ export function AdsProvider({ children }: AdsProviderProps) {
   }
 
   return (
-    <AdsContext.Provider value={{ ads, createAd, fetchAds, error, deleteAd }}>
+    <AdsContext.Provider
+      value={{ ads, createAd, fetchAds, error, deleteAd, fetchAdsUser }}
+    >
       {children}
     </AdsContext.Provider>
   )
