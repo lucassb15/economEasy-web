@@ -1,7 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -43,4 +43,13 @@
 
 .react-hot-toast {
   z-index: 9999 !important;
+}
+
+.bg-notfound {
+  background-image: url(https://i.pinimg.com/originals/62/39/4d/62394d753859943e6a1a36443ef78795.gif);
+  background-size: cover;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-family: 'Luckiest Guy', cursive;
 }
