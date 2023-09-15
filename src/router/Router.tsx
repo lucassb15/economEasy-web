@@ -11,6 +11,7 @@ import { Cards } from '../views/companyView/company/cards'
 import { RegisterEmployee } from '../views/companyView/company/employee'
 import { PrivateRouteEmployee } from '@components/PrivateRouteEmployee'
 import { Employee } from '../views/employeeView/employee'
+import { NotFound } from '@components/NotFound'
 export function Router() {
   return (
     <Routes>
@@ -71,7 +72,7 @@ export function Router() {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/register/user" element={<RegisterUser />} />
       <Route path="/register/company" element={<RegisterCompany />} />
-      <Route path="*" element={<div>Not Found</div>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

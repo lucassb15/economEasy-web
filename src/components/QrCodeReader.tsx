@@ -32,10 +32,10 @@ const QRReader: React.FC = () => {
           qr.callback = (err, value) => {
             if (err) {
               console.error(err)
-              console.log('No QR code detected')
+              console.log('QR code não encontrado')
               return
             }
-            console.log('Found QR code!', value.result)
+            console.log('QR Code encontrado!', value.result)
             setQrCodeData(value.result)
             setIsCameraOpen(false)
           }
@@ -68,9 +68,7 @@ const QRReader: React.FC = () => {
             icon={<QrCode size={24} weight="bold" />}
             ButtonTitle="Ler QR CODE"
             onClick={() => setIsCameraOpen(true)}
-          >
-            LER QR CODE
-          </Button>
+          ></Button>
           {qrCodeData && <p>QR Code resultado: {qrCodeData}</p>}
         </>
       )}
