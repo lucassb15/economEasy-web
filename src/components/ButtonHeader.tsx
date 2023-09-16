@@ -10,7 +10,12 @@ export function ButtonHeader({ ButtonTitle, icon, onClick }: ButtonProps) {
   return (
     <ChakraButton
       type="submit"
-      onClick={onClick}
+      onClick={(event) => {
+        event.stopPropagation()
+        if (onClick) {
+          onClick()
+        }
+      }}
       bg="#0E2A56"
       color="white"
       _hover={{ bg: '#0E2A56' }}

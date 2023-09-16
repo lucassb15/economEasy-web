@@ -55,7 +55,6 @@ export function CardsProvider({ children }: CardsProviderProps) {
   const MAX_CARDS_ALLOWED = 1
 
   useEffect(() => {
-    // Busca o estado mais recente do cartão
     fetchCards()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

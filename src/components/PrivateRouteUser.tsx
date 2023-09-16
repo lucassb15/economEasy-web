@@ -8,8 +8,6 @@ import { Roles } from '../@types/Roles'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PrivateRouteUser({ children }: any) {
   const { isAuthenticated, user, loading } = useContext(AuthContext)
-  console.log('isAuthenticated:', isAuthenticated)
-  console.log('user role:', user?.role)
 
   if (loading) {
     return (
@@ -18,7 +16,6 @@ export function PrivateRouteUser({ children }: any) {
       </div>
     )
   }
-  // Teste
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />
   }

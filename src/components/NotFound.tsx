@@ -1,5 +1,5 @@
 import { House } from '@phosphor-icons/react'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button } from './Button'
 
 export function NotFound() {
@@ -21,12 +21,11 @@ export function NotFound() {
             temporariamente desativada.
           </p>
           <div className="flex justify-center mt-2">
-            <Button onClick={() => navigate('/signin')}
+            <Button
+              onClick={() => navigate('/signin')}
               icon={<House size={24} weight="bold" />}
               ButtonTitle="Voltar para página inicial"
-            >
-                <h2>Voltar para página inicial</h2>
-            </Button>
+            />
           </div>
         </div>
       </div>
