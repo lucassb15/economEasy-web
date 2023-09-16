@@ -29,7 +29,10 @@ const QRReader: React.FC = () => {
           )
 
           const qr = new QrCodeReader()
-          qr.callback = (err, value) => {
+          qr.callback = (
+            err: unknown,
+            value: { result: React.SetStateAction<string | null> },
+          ) => {
             if (err) {
               console.error(err)
               console.log('QR code não encontrado')

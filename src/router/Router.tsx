@@ -4,7 +4,7 @@ import { PrivateRouteUser } from '../components/PrivateRouteUser'
 import { SignIn } from '../views/signin'
 import { RegisterUser } from '../views/authentication/user'
 import { RegisterCompany } from '../views/authentication/company'
-import { Home } from '../views/userView/user'
+import { Home } from '../views/userView/ads'
 import { Dashboard } from '../views/companyView/company/dashboard'
 import { Ads } from '../views/companyView/company/ads'
 import { Cards } from '../views/companyView/company/cards'
@@ -12,6 +12,7 @@ import { RegisterEmployee } from '../views/companyView/company/employee'
 import { PrivateRouteEmployee } from '@components/PrivateRouteEmployee'
 import { Employee } from '../views/employeeView/employee'
 import { NotFound } from '@components/NotFound'
+import { UserCards } from '../views/userView/cards'
 export function Router() {
   return (
     <Routes>
@@ -20,6 +21,15 @@ export function Router() {
         element={
           <PrivateRouteUser>
             <Home />
+          </PrivateRouteUser>
+        }
+      />
+
+      <Route
+        path="/user/cards"
+        element={
+          <PrivateRouteUser>
+            <UserCards />
           </PrivateRouteUser>
         }
       />

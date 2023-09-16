@@ -204,9 +204,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     api
       .post('/register/company', data)
       .then(() => {
-        toast.success('Empresa registrada com sucesso!', {
-          // ... (outros parâmetros do toast se necessário)
-        })
+        toast.success('Empresa registrada com sucesso!')
       })
       .catch((error) => {
         console.error(error)

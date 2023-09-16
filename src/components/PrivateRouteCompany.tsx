@@ -17,7 +17,6 @@ export function PrivateRouteCompany({ children }: any) {
       </div>
     )
   }
-  // Teste
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />
   }

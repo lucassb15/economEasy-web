@@ -33,6 +33,7 @@ export function UserAdList() {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const bgColor = useColorModeValue('white', '#262626')
+  const nonPriorityAds = ads.filter((ad) => !ad.priority)
 
   return (
     <Grid
@@ -45,7 +46,7 @@ export function UserAdList() {
         lg: 'repeat(auto-fill, minmax(250px, 1fr))',
       }}
     >
-      {ads.map((ad) => (
+      {nonPriorityAds.map((ad) => (
         <Box
           key={ad.id}
           borderWidth="1px"

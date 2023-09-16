@@ -10,7 +10,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 
-import { AuthContext } from '../contexts/AuthContext' // Adicione o import do seu AuthContext
+import { AuthContext } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 interface FormHeaderProps {
   title: string
@@ -18,6 +19,7 @@ interface FormHeaderProps {
 
 export function Header({ title }: FormHeaderProps) {
   const { user, signOut } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   function handleSignOut() {
     signOut()
@@ -51,8 +53,16 @@ export function Header({ title }: FormHeaderProps) {
 
       <div className="flex items-center space-x-4 md:space-x-0 md:mx-0">
         <div className="hidden md:flex space-x-4 items-center">
-          <ButtonHeader icon={<Megaphone />} ButtonTitle="Ver anúncios" />
-          <ButtonHeader icon={<Cards />} ButtonTitle="Meus cartões" />
+          <ButtonHeader
+            icon={<Megaphone />}
+            ButtonTitle="Ver anúncios"
+            onClick={() => navigate('/home')}
+          />
+          <ButtonHeader
+            icon={<Cards />}
+            ButtonTitle="Meus cartões"
+            onClick={() => navigate('/user/cards')}
+          />
           <span className="font-medium">{user?.name}</span>
         </div>
 
@@ -67,10 +77,18 @@ export function Header({ title }: FormHeaderProps) {
           </PopoverTrigger>
           <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
             <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
-              <ButtonHeader icon={<Megaphone />} ButtonTitle="Ver anúncios" />
+              <ButtonHeader
+                icon={<Megaphone />}
+                ButtonTitle="Ver anúncios"
+                onClick={() => navigate('/home')}
+              />
             </Box>
             <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
-              <ButtonHeader icon={<Cards />} ButtonTitle="Meus cartões" />
+              <ButtonHeader
+                icon={<Cards />}
+                ButtonTitle="Meus cartões"
+                onClick={() => navigate('/user/cards')}
+              />
             </Box>
             <Box p={4}>
               <ButtonHeader

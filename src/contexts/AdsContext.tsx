@@ -15,6 +15,7 @@ interface AxiosError {
 }
 
 interface AdProps {
+  description?: ReactNode
   id?: string
   companyId: string
   name?: string
