@@ -7,7 +7,7 @@ import { adSchema } from '../../schemas/ad.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Image, StarOfDavid } from '@phosphor-icons/react'
-import { Input } from '@components/formAuthentication/Input'
+import { Input } from '@components/Input'
 import {
   Button,
   Flex,
