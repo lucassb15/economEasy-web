@@ -7,7 +7,7 @@ import { cardSchema } from '../../schemas/card.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Cards, Check, Image } from '@phosphor-icons/react'
-import { Input } from '@components/formAuthentication/Input'
+import { Input } from '@components/Input'
 import {
   Button,
   Flex,
@@ -67,7 +67,7 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
     <Flex
       flexDirection="column"
       w="full"
-      maxW="400px"
+      maxW="450px"
       mt={0}
       bgColor={bgColor}
       color={textColor}

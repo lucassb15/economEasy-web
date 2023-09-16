@@ -7,7 +7,7 @@ import { signInSchema } from '../../schemas/user.schema'
 
 import Logo from '../../assets/Logo.svg'
 import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react'
-import { Input } from './Input'
+import { Input } from '../Input'
 import { useColorModeValue } from '@chakra-ui/react'
 
 interface FormProps {

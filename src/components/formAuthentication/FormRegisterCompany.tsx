@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { Input } from './Input'
+import { Input } from '../Input'
 import { Envelope, LockKey, Buildings, Image } from '@phosphor-icons/react'
 import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'

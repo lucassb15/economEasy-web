@@ -8,8 +8,8 @@ const Theme = extendTheme({
   styles: {
     global: (props: { colorMode: string }) => ({
       body: {
-        bg: props.colorMode === 'dark' ? '#121212' : '#FFFFFF',
-        color: props.colorMode === 'dark' ? '#E5E7EB' : '#2D3748',
+        bg: props.colorMode === 'dark' ? '#121212' : '#f5f5f5',
+        color: props.colorMode === 'dark' ? '#E5E7EB' : '#000',
       },
     }),
   },
@@ -25,17 +25,20 @@ const Theme = extendTheme({
     Button: {
       variants: {
         solid: (props: { colorMode: string }) => ({
-          bg: props.colorMode === 'dark' ? '#3182CE' : '#E2E8F0',
-          color: props.colorMode === 'dark' ? '#FFFFFF' : '#2D3748',
+          bg: props.colorMode === 'dark' ? '#3182CE' : '#3983f4', // Usando a cor principal no fundo do botão no modo claro
+          color: props.colorMode === 'dark' ? '#FFFFFF' : '#FFFFFF', // Texto branco para contraste com o fundo azul
+          _hover: {
+            bg: props.colorMode === 'dark' ? '#2B6CB0' : '#3174D5', // Um tom mais escuro da cor principal para o estado de hover
+          },
         }),
       },
     },
     Link: {
       baseStyle: (props: { colorMode: string }) => ({
-        color: props.colorMode === 'dark' ? '#4299E1' : '#3182CE',
+        color: props.colorMode === 'dark' ? '#4299E1' : '#3983f4', // Cor principal para links no modo claro
         _hover: {
           textDecoration: 'underline',
-          color: props.colorMode === 'dark' ? '#3182CE' : '#2B6CB0',
+          color: props.colorMode === 'dark' ? '#3182CE' : '#3174D5', // Um tom mais escuro da cor principal para o estado de hover
         },
       }),
     },

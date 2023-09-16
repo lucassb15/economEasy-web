@@ -5,6 +5,7 @@ import React, {
   ForwardRefRenderFunction,
 } from 'react'
 import { FieldError } from 'react-hook-form'
+import { Eye, EyeSlash } from '@phosphor-icons/react'
 
 interface InputProps {
   type?: string
@@ -18,6 +19,7 @@ interface InputProps {
   onBlur?: React.FocusEventHandler<HTMLInputElement>
   color?: string
 }
+
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   {
     type = 'text',
@@ -36,28 +38,40 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     setValue?.(e.target.value)
   }
   const [isFocused, setIsFocused] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+  const borderStyle = error
+    ? 'border-red-300'
+    : isFocused
+    ? 'border-blue-400'
+    : 'border-gray-300'
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev)
+  }
+
   return (
     <div>
       <div
-        className={`flex items-center rounded-sm transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 border ${
-          isFocused
-            ? 'border-blue-300 shadow-lg'
-            : 'border-gray-300 shadow-sm hover:shadow-md'
-        }`}
+        className={`flex items-center rounded-sm transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 border-2 ${borderStyle} w-full`}
       >
         <div
-          className={`text-gray-500 px-2 py-2 bg-white border-r transition-all duration-300 ease-in-out dark:bg-gray-800 dark:text-white ${
-            isFocused ? 'border-blue-300' : 'border-gray-300'
-          }`}
+          className={`text-gray-500 px-2 py-3 bg-white border-r-2 transition-all duration-300 ease-in-out dark:bg-gray-800 dark:text-white ${borderStyle} flex items-center justify-center`}
         >
           {icon}
         </div>
         <input
           ref={ref}
-          className={`flex-grow py-2 px-2 border-none outline-none rounded-r ${
+          className={`h-full w-full bg-white px-4 py-3 text-gray-600 placeholder-gray-400 focus:outline-none ${
             color || 'text-black dark:text-white'
           }`}
-          type={type}
+          type={
+            type === 'password' && !isPasswordVisible
+              ? 'password'
+              : type !== 'file'
+              ? 'text'
+              : 'file'
+          }
           value={value}
           onChange={handleInputChange}
           placeholder={placeholder}
@@ -66,6 +80,18 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           disabled={disabled}
           {...rest}
         />
+        {type === 'password' && (
+          <div
+            className="pr-4 py-3 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisible ? (
+              <EyeSlash size={24} color="black" />
+            ) : (
+              <Eye size={24} color="black" />
+            )}
+          </div>
+        )}
       </div>
       {!!error && <span className="text-red-500">{error.message}</span>}
     </div>

@@ -6,7 +6,7 @@ import {
   SignOut,
   UserCirclePlus,
 } from '@phosphor-icons/react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import DarkModeSwitch from '@components/DarkModeSwitch'
 import { AuthContext } from '@contexts/AuthContext'
 import { useCallback, useContext, useState } from 'react'
@@ -22,6 +22,8 @@ export function MenuDashboard() {
   function handleSignOut() {
     signOut()
   }
+
+  const location = useLocation()
 
   return (
     <div>
@@ -47,29 +49,46 @@ export function MenuDashboard() {
           <DarkModeSwitch />
         </div>
         <Link
-          className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
+          className={`gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 ${
+            location.pathname === '/company/dashboard'
+              ? 'bg-blue-500 text-white'
+              : 'hover:bg-blue-500 hover:text-white'
+          }`}
           to={'/company/dashboard'}
         >
           <Gauge size={24} />
         </Link>
         <Link
-          className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
+          className={`gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 ${
+            location.pathname === '/company/ads'
+              ? 'bg-blue-500 text-white'
+              : 'hover:bg-blue-500 hover:text-white'
+          }`}
           to="/company/ads"
         >
           <Megaphone size={24} />
         </Link>
         <Link
-          className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
+          className={`gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 ${
+            location.pathname === '/company/cards'
+              ? 'bg-blue-500 text-white'
+              : 'hover:bg-blue-500 hover:text-white'
+          }`}
           to="/company/cards"
         >
           <Cards size={24} />
         </Link>
         <Link
-          className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
+          className={`gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 ${
+            location.pathname === '/company/employee'
+              ? 'bg-blue-500 text-white'
+              : 'hover:bg-blue-500 hover:text-white'
+          }`}
           to="/company/employee"
         >
           <UserCirclePlus size={24} />
         </Link>
+
         <button
           className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
           onClick={handleSignOut}

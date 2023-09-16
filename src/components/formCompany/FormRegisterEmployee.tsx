@@ -1,4 +1,4 @@
-import { Input } from '../formAuthentication/Input'
+import { Input } from '../Input'
 import { Envelope, LockKey, User } from '@phosphor-icons/react'
 import { FormState, SubmitHandler, useForm } from 'react-hook-form'
 import {
