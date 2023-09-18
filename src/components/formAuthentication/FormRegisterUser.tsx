@@ -1,9 +1,12 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useContext } from 'react'
 import { Input } from '../Input'
 import { Envelope, LockKey, User } from '@phosphor-icons/react'
 import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { registerSchema } from '../../schemas/user.schema'
+import { AuthContext } from '@contexts/AuthContext'
+import { FormState, SubmitHandler, useForm } from 'react-hook-form'
 
 interface FormProps {
   FormTitle: string
@@ -11,33 +14,42 @@ interface FormProps {
   SubmitText: string
 }
 
+interface UserFormData {
+  companyId: string
+  email: string
+  name: string
+  password: string
+  confirmPassword: string
+  isEmployee: boolean
+}
+
 export function FormRegisterUser({
   FormTitle,
   FormSubtitle,
   SubmitText,
 }: FormProps) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const { register, handleSubmit, formState } = useForm<UserFormData>({
+    resolver: zodResolver(registerSchema),
+  })
+  const { errors } = formState
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    try {
-      const response = await axios.post('Rota do backend, Colocar depois', {
-        name,
-        email,
-        password,
-        confirmPassword,
-      })
-      const token = response.data.token
-      localStorage.setItem('authToken', token)
+  const { registerUser } = useContext(AuthContext)
 
-      // Criar redirect para Home
-    } catch (error) {
-      console.error('Erro ao cadastrar:', error)
-      // Escolher a lib de mostrar erro depois
-    }
+  const onSubmit: SubmitHandler<UserFormData> = async (data) => {
+    const dados = await registerUser({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      isEmployee: false,
+    })
+
+    console.log(dados)
+  }
+
+  // Debug erros
+  const onError = (errors: FormState<UserFormData>['errors'], e: unknown) => {
+    console.log(errors, e)
   }
 
   return (
@@ -51,34 +63,37 @@ export function FormRegisterUser({
         </h3>
         <p className="text-sm md:text-base lg:text-lg mb-2">{FormSubtitle}</p>
       </div>
-      <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit}>
+      <form
+        className="w-full flex flex-col gap-5"
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
         <Input
           icon={<User size={24} weight="thin" />}
           type="name"
           placeholder="Seu nome"
-          value={name}
-          setValue={setName}
+          error={errors.name}
+          {...register('name')}
         />
         <Input
           icon={<Envelope size={24} weight="thin" />}
           type="email"
           placeholder="E-mail"
-          value={email}
-          setValue={setEmail}
+          {...register('email')}
+          error={errors.email}
         />
         <Input
           icon={<LockKey size={24} weight="thin" />}
           type="password"
           placeholder="Senha"
-          value={password}
-          setValue={setPassword}
+          error={errors.password}
+          {...register('password')}
         />
         <Input
           icon={<LockKey size={24} weight="thin" />}
           type="password"
           placeholder="Confirmar senha"
-          value={confirmPassword}
-          setValue={setConfirmPassword}
+          error={errors.confirmPassword}
+          {...register('confirmPassword')}
         />
         <button
           type="submit"
@@ -102,10 +117,10 @@ export function FormRegisterUser({
         <hr className="border border-gray-300 w-full" />
       </div>
       <div className="w-full flex items-center justify-center mt-5">
-        <p className="text-xs md:text-sm font-normal text-black">
+        <p className="text-xs md:text-sm font-normal text-white">
           Já tem uma conta?
           <Link
-            to="/login"
+            to="/signin"
             className="font-semibold underline underline-offset-2 pb-10"
           >
             {' '}

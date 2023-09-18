@@ -10,7 +10,6 @@ import { Link, useLocation } from 'react-router-dom'
 import DarkModeSwitch from '@components/DarkModeSwitch'
 import { AuthContext } from '@contexts/AuthContext'
 import { useCallback, useContext, useState } from 'react'
-
 export function MenuDashboard() {
   const [isOpen, setIsOpen] = useState(false)
   const toggleIsOpen = useCallback(() => {
@@ -88,7 +87,22 @@ export function MenuDashboard() {
         >
           <UserCirclePlus size={24} />
         </Link>
-
+        <Link
+          className={`gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 ${
+            location.pathname === '/company/perfil'
+              ? 'bg-blue-500 text-white'
+              : 'hover:bg-blue-500 hover:text-white'
+          }`}
+          to="/company/perfil"
+        >
+          <img
+            className="rounded-full"
+            src={`http://localhost:3333/${user?.logo}`}
+            alt="imagem da empresa"
+            width={24}
+            height={24}
+          />
+        </Link>
         <button
           className="gap-4 py-2.5 px-4 flex items-center space-x-2 rounded transition duration-200 hover:bg-blue-500 hover:text-white"
           onClick={handleSignOut}

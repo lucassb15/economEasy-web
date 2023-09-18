@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { Cards, Megaphone, SignOut } from '@phosphor-icons/react'
+import { Cards, List, Megaphone, SignOut } from '@phosphor-icons/react'
 
 import { ButtonHeader } from './ButtonHeader'
 import {
@@ -52,53 +52,93 @@ export function Header({ title }: FormHeaderProps) {
       <span className="font-title text-xl font-semibold">{title}</span>
 
       <div className="flex items-center space-x-4 md:space-x-0 md:mx-0">
-        <div className="hidden md:flex space-x-4 items-center">
-          <ButtonHeader
-            icon={<Megaphone />}
-            ButtonTitle="Ver anúncios"
-            onClick={() => navigate('/home')}
-          />
-          <ButtonHeader
-            icon={<Cards />}
-            ButtonTitle="Meus cartões"
-            onClick={() => navigate('/user/cards')}
-          />
-          <span className="font-medium">{user?.name}</span>
-        </div>
+        {user?.isEmployee ? (
+          <div className="hidden md:flex space-x-4 items-center">
+            <ButtonHeader
+              icon={<Megaphone />}
+              ButtonTitle="Teste"
+              onClick={() => navigate('/employee')}
+            />
+            <span className="font-medium">{user?.name}</span>
+          </div>
+        ) : (
+          <div className="hidden md:flex space-x-4 items-center">
+            <ButtonHeader
+              icon={<Megaphone />}
+              ButtonTitle="Ver anúncios"
+              onClick={() => navigate('/home')}
+            />
+            <ButtonHeader
+              icon={<Cards />}
+              ButtonTitle="Meus cartões"
+              onClick={() => navigate('/user/cards')}
+            />
+            <span className="font-medium">{user?.name}</span>
+          </div>
+        )}
 
-        <Popover isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
-          <PopoverTrigger>
-            <button
-              className="md:hidden text-2xl focus:outline-none"
-              onClick={() => setMenuOpen((prev) => !prev)}
-            >
-              ☰
-            </button>
-          </PopoverTrigger>
-          <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
-            <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
-              <ButtonHeader
-                icon={<Megaphone />}
-                ButtonTitle="Ver anúncios"
-                onClick={() => navigate('/home')}
-              />
-            </Box>
-            <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
-              <ButtonHeader
-                icon={<Cards />}
-                ButtonTitle="Meus cartões"
-                onClick={() => navigate('/user/cards')}
-              />
-            </Box>
-            <Box p={4}>
-              <ButtonHeader
-                icon={<SignOut />}
-                ButtonTitle="Sair"
-                onClick={handleSignOut}
-              />
-            </Box>
-          </PopoverContent>
-        </Popover>
+        {user?.isEmployee ? (
+          <Popover isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
+            <PopoverTrigger>
+              <button
+                className="md:hidden text-2xl focus:outline-none"
+                onClick={() => setMenuOpen((prev) => !prev)}
+              >
+                <List />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
+              <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
+                <ButtonHeader
+                  icon={<Megaphone />}
+                  ButtonTitle="Teste"
+                  onClick={() => navigate('/employee')}
+                />
+              </Box>
+              <Box p={4}>
+                <ButtonHeader
+                  icon={<SignOut />}
+                  ButtonTitle="Sair"
+                  onClick={handleSignOut}
+                />
+              </Box>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Popover isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
+            <PopoverTrigger>
+              <button
+                className="md:hidden text-2xl focus:outline-none"
+                onClick={() => setMenuOpen((prev) => !prev)}
+              >
+                <List />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
+              <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
+                <ButtonHeader
+                  icon={<Megaphone />}
+                  ButtonTitle="Ver anúncios"
+                  onClick={() => navigate('/home')}
+                />
+              </Box>
+              <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
+                <ButtonHeader
+                  icon={<Cards />}
+                  ButtonTitle="Meus cartões"
+                  onClick={() => navigate('/user/cards')}
+                />
+              </Box>
+              <Box p={4}>
+                <ButtonHeader
+                  icon={<SignOut />}
+                  ButtonTitle="Sair"
+                  onClick={handleSignOut}
+                />
+              </Box>
+            </PopoverContent>
+          </Popover>
+        )}
 
         <button
           className="hidden md:block md:p-2 focus:outline-none"
