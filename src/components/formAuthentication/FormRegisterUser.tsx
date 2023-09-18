@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { FormEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Input } from '../Input'
 import { Envelope, LockKey, User } from '@phosphor-icons/react'
 import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'
+import { api } from '@api/api'
 
 interface FormProps {
   FormTitle: string
@@ -20,11 +21,12 @@ export function FormRegisterUser({
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const response = await axios.post('Rota do backend, Colocar depois', {
+      const response = await api.post('/register/user', {
         name,
         email,
         password,
@@ -33,7 +35,7 @@ export function FormRegisterUser({
       const token = response.data.token
       localStorage.setItem('authToken', token)
 
-      // Criar redirect para Home
+      navigate('/signin')
     } catch (error) {
       console.error('Erro ao cadastrar:', error)
       // Escolher a lib de mostrar erro depois
