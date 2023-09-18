@@ -1,13 +1,26 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useContext } from 'react'
+import { FormState, SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../Input'
 import { Envelope, LockKey, Buildings, Image } from '@phosphor-icons/react'
 import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AuthContext } from '@contexts/AuthContext'
+import { companySchema } from '../../schemas/company.scheema'
+
 interface FormProps {
   FormTitle: string
   FormSubtitle: string
   SubmitText: string
+}
+
+interface CompanyFormData {
+  companyId: string
+  email: string
+  name: string
+  password: string
+  confirmPassword: string
+  logo: FileList
 }
 
 export function FormRegisterCompany({
@@ -15,30 +28,31 @@ export function FormRegisterCompany({
   FormSubtitle,
   SubmitText,
 }: FormProps) {
-  const [image, setImage] = useState('')
-  const [nameCompany, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const { register, handleSubmit, formState } = useForm<CompanyFormData>({
+    resolver: zodResolver(companySchema),
+  })
+  const { errors } = formState
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    try {
-      const response = await axios.post('Rota do backend, Colocar depois', {
-        nameCompany,
-        email,
-        password,
-        confirmPassword,
-        image,
-      })
-      const token = response.data.token
-      localStorage.setItem('authToken', token)
+  const { registerCompany } = useContext(AuthContext)
 
-      // Criar redirect para Home
-    } catch (error) {
-      console.error('Erro ao cadastrar:', error)
-      // Escolher a lib de mostrar erro depois
-    }
+  const onSubmit: SubmitHandler<CompanyFormData> = async (data) => {
+    const dados = await registerCompany({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      logo: data.logo,
+    })
+
+    console.log(dados)
+  }
+
+  // Debug erros
+  const onError = (
+    errors: FormState<CompanyFormData>['errors'],
+    e: unknown,
+  ) => {
+    console.log(errors, e)
   }
 
   return (
@@ -52,47 +66,49 @@ export function FormRegisterCompany({
         </h3>
         <p className="text-sm md:text-base lg:text-lg mb-2">{FormSubtitle}</p>
       </div>
-      <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit}>
+      <form
+        className="w-full flex flex-col gap-5"
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
         <Input
           icon={<Buildings size={24} weight="thin" />}
           type="name"
           placeholder="Nome da empresa"
-          value={nameCompany}
-          setValue={setName}
+          error={errors.name}
+          {...register('name')}
         />
         <Input
           icon={<Envelope size={24} weight="thin" />}
           type="email"
           placeholder="E-mail"
-          value={email}
-          setValue={setEmail}
+          error={errors.email}
+          {...register('email')}
         />
         <Input
           icon={<LockKey size={24} weight="thin" />}
           type="password"
           placeholder="Senha"
-          value={password}
-          setValue={setPassword}
+          error={errors.password}
+          {...register('password')}
         />
         <Input
           icon={<LockKey size={24} weight="thin" />}
           type="password"
           placeholder="Confirmar senha"
-          value={confirmPassword}
-          setValue={setConfirmPassword}
+          error={errors.confirmPassword}
+          {...register('confirmPassword')}
         />
         <Input
           icon={
             <Image
+              alt="Icone para o input de adicionar imagem"
               size={24}
-              weight="thin"
-              alt="clique no botão para inserir a logo da sua empresa"
+              weight="regular"
             />
           }
           type="file"
-          placeholder="Logo da empresa"
-          value={image}
-          setValue={setImage}
+          error={errors.logo}
+          {...register('logo')}
         />
         <button
           type="submit"
@@ -116,10 +132,10 @@ export function FormRegisterCompany({
         <hr className="border border-gray-300 w-full" />
       </div>
       <div className="w-full flex items-center justify-center mt-5">
-        <p className="text-xs md:text-sm font-normal text-black">
+        <p className="text-xs md:text-sm font-normal text-white">
           Já tem uma conta?
           <Link
-            to="/login"
+            to="/signin"
             className="font-semibold underline underline-offset-2 pb-10"
           >
             {' '}

@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-export const registerSchema = z
+export const companySchema = z
   .object({
-    name: z.string().min(3, 'Nome obrigatório'),
+    name: z.string().min(3, 'Nome da empresa é obrigatório'),
     email: z.string().nonempty('E-mail obrigatório').email('E-mail inválido'),
     password: z
       .string()
@@ -18,17 +18,13 @@ export const registerSchema = z
     confirmPassword: z.string({
       required_error: 'Confirmação de senha obrigatória',
     }),
+    logo: z.any().refine((fileList: FileList) => fileList.length > 0, {
+      message: 'Uma imagem é obrigatória',
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'As senhas são diferentes',
     path: ['confirmPassword'],
   })
 
-export type RegisterInputProps = z.infer<typeof registerSchema>
-
-export const signInSchema = z.object({
-  email: z.string().min(1, 'E-mail obrigatório').email('E-mail inválido'),
-  password: z.string().min(4, 'Senha obrigatória'),
-})
-
-export type SignInInputProps = z.infer<typeof signInSchema>
+export type RegisterInputProps = z.infer<typeof companySchema>

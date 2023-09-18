@@ -30,6 +30,8 @@ interface UserProps {
   email: string
   role: Roles
   companyId?: string
+  isEmployee?: boolean
+  logo?: FileList
 }
 
 interface RegisterUserProps {
@@ -42,7 +44,11 @@ interface RegisterUserProps {
 }
 
 interface RegisterCompanyProps {
-  companyName: string
+  email: string
+  name: string
+  password: string
+  confirmPassword: string
+  logo: FileList
 }
 
 interface AuthContextProps {
@@ -156,7 +162,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { accessToken } = response.data
 
         if (data.isEmployee) {
-          toast.success('Funcionário criado com sucesso!')
+          toast.success('Funcionário cadastrado com sucesso!')
+          setTimeout(() => window.location.reload(), 1000)
+        } else {
+          toast.success('Usuário cadastrado com sucesso!')
           setTimeout(() => window.location.reload(), 1000)
         }
         // Somente defina o novo token se nenhum usuário estiver atualmente autenticado
@@ -172,12 +181,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setUser(userRegistered)
 
             api.defaults.headers.Authorization = `Bearer ${accessToken}`
-
-            if (userRegistered.role === Roles.Owner) {
-              navigate('/company/dashboard')
-            } else if (userRegistered.role === Roles.Customer) {
-              navigate('/home')
-            }
           } catch (error) {
             console.error('Erro ao decodificar o token', error)
           }
@@ -201,14 +204,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function registerCompany(data: RegisterCompanyProps) {
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('email', data.email)
+    formData.append('password', data.password)
+    formData.append('confirmPassword', data.confirmPassword)
+    if (data.logo.length > 0) {
+      formData.append('logo', data.logo[0]) // Adicionando o primeiro arquivo do FileList
+    }
+
     api
-      .post('/register/company', data)
+      .post('/register/company', formData)
       .then(() => {
         toast.success('Empresa registrada com sucesso!')
+        setTimeout(() => window.location.reload(), 1000)
       })
       .catch((error) => {
         console.error(error)
-        toast.error('Ops! Ocorreu um erro inesperado ao registrar a empresa.', {
+        toast.error(error.response.data.message, {
           position: 'top-right',
           style: {
             backgroundColor: colors.red[500],
