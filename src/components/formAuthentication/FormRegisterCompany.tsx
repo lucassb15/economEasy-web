@@ -2,11 +2,11 @@ import { useContext } from 'react'
 import { FormState, SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../Input'
 import { Envelope, LockKey, Buildings, Image } from '@phosphor-icons/react'
-import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AuthContext } from '@contexts/AuthContext'
 import { companySchema } from '../../schemas/company.scheema'
+import LogoFidelese from '../../assets/LogoFidelese.svg'
 
 interface FormProps {
   FormTitle: string
@@ -58,7 +58,11 @@ export function FormRegisterCompany({
   return (
     <div className="flex flex-col md:overflow-y-auto custom-scrollbar h-screen p-4 sm:p-10 md:p-20 lg:p-20 gap-y-5 items-center justify-center w-full md:w-1/2">
       <div className="text-xl font-semibold pt-10">
-        <img className="w-full h-[30px] object-cover" src={Logo} alt="Hero" />
+        <img
+          className="w-max h-[70px] object-cover"
+          src={LogoFidelese}
+          alt="Hero"
+        />
       </div>
       <div className="w-full flex flex-col max-w-[550px]">
         <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4">

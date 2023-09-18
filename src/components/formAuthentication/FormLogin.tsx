@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { signInSchema } from '../../schemas/user.schema'
 
 import LogoFidelese from '../../assets/LogoFidelese.svg'
+
 import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react'
 import { Input } from '../Input'
 
@@ -36,7 +37,7 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
     <div className="flex flex-col md:overflow-y-auto custom-scrollbar h-screen p-4 items-center sm:p-10 md:p-20 lg:p-20 gap-y-5 justify-center w-full md:w-1/2">
       <div className="text-xl font-semibold pt-10">
         <img
-          className="w-max h-[80px] object-cover"
+          className="w-max h-[70px] object-cover"
           src={LogoFidelese}
           alt="Hero"
         />
