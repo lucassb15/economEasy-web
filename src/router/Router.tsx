@@ -13,6 +13,7 @@ import { PrivateRouteEmployee } from '@components/PrivateRouteEmployee'
 import { Employee } from '../views/employeeView/employee'
 import { NotFound } from '@components/NotFound'
 import { UserCards } from '../views/userView/cards'
+import { UserLoyaltyCardsProvider } from '@contexts/UserLoyaltyCardsContext'
 export function Router() {
   return (
     <Routes>
@@ -29,7 +30,9 @@ export function Router() {
         path="/user/cards"
         element={
           <PrivateRouteUser>
-            <UserCards />
+            <UserLoyaltyCardsProvider>
+              <UserCards />
+            </UserLoyaltyCardsProvider>
           </PrivateRouteUser>
         }
       />
