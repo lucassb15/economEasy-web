@@ -1,13 +1,18 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import QrCodeReader from 'qrcode-reader'
 import { Button } from './Button'
 import { QrCode } from '@phosphor-icons/react'
+import { CardsEmployeeContext } from '@contexts/CardsEmployeeContext'
 
-const QRReader: React.FC = () => {
+interface QRReaderProps {
+  companyCardId?: string
+}
+
+export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
   const webcamRef = useRef<Webcam>(null)
   const [isCameraOpen, setIsCameraOpen] = useState(false)
-  const [qrCodeData, setQrCodeData] = useState<string | null>(null)
+  const { sendLoyaltyData } = useContext(CardsEmployeeContext)
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef?.current?.getScreenshot()
@@ -39,7 +44,14 @@ const QRReader: React.FC = () => {
               return
             }
             console.log('QR Code encontrado!', value.result)
-            setQrCodeData(value.result)
+
+            const decodedData = JSON.parse(value.result as string)
+            sendLoyaltyData({
+              customerId: decodedData.customerId,
+              token: decodedData.token,
+              companyCardId: companyCardId!,
+            })
+
             setIsCameraOpen(false)
           }
           qr.decode(imageData)
@@ -72,7 +84,6 @@ const QRReader: React.FC = () => {
             ButtonTitle="Ler QR CODE"
             onClick={() => setIsCameraOpen(true)}
           ></Button>
-          {qrCodeData && <p>QR Code resultado: {qrCodeData}</p>}
         </>
       )}
     </div>

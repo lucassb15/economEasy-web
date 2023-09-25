@@ -8,13 +8,13 @@ export function Home() {
       <Header title={'Usuário'} />
       <div className="md:px-28 py-10">
         <div className="mt-10">
-          <h1>Anúncios realeza</h1>
+          <h1>Anúncios pagos</h1>
           <AdsProvider>
             <Carousel />
           </AdsProvider>
         </div>
         <div className="mt-20">
-          <h1>Anúncios pleb</h1>
+          <h1>Anúncios grátis</h1>
           <AdsProvider>
             <UserAdList />
           </AdsProvider>

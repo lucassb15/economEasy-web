@@ -28,9 +28,8 @@ import { Trash, XCircle } from '@phosphor-icons/react'
 import toast from 'react-hot-toast'
 import colors from 'tailwindcss/colors'
 
-function CardList() {
+export function CardList() {
   const { cards, fetchCards, deleteCard, error } = useContext(CardsContext)
-
   const [activePopover, setActivePopover] = useState<string | null>(null)
   const { onOpen, onClose } = useDisclosure()
 
@@ -189,5 +188,3 @@ function CardList() {
     </VStack>
   )
 }
-
-export default CardList
