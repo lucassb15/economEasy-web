@@ -1,7 +1,7 @@
 import { FormController } from '@components/formAuthentication/FormController'
 import { CardsProvider } from '@contexts/CardsContext'
 import { MenuDashboard } from '@components/MenuDashboard'
-import CardList from '@components/formCompany/CardList'
+import { CardList } from '@components/formCompany/CardList'
 
 export function Cards() {
   return (

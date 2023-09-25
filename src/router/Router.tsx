@@ -14,6 +14,7 @@ import { Employee } from '../views/employeeView/employee'
 import { NotFound } from '@components/NotFound'
 import { UserCards } from '../views/userView/cards'
 import { UserLoyaltyCardsProvider } from '@contexts/UserLoyaltyCardsContext'
+import { CardsEmployeeProvider } from '@contexts/CardsEmployeeContext'
 export function Router() {
   return (
     <Routes>
@@ -77,7 +78,9 @@ export function Router() {
         path="/employee"
         element={
           <PrivateRouteEmployee>
-            <Employee />
+            <CardsEmployeeProvider>
+              <Employee />
+            </CardsEmployeeProvider>
           </PrivateRouteEmployee>
         }
       />

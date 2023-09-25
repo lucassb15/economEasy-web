@@ -1,10 +1,13 @@
+import { CardListEmployee } from '@components/formEmployee/CardListEmployee'
 import { Header } from '../../../components/Header'
-import QRReader from '@components/QrCodeReader'
+
 export function Employee() {
   return (
     <div>
       <Header title={'Funcionário'} />
-      <QRReader />
+      <div className="md:px-28 py-10">
+        <CardListEmployee />
+      </div>
     </div>
   )
 }
