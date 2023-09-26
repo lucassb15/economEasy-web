@@ -75,7 +75,7 @@ export function CardsEmployeeProvider({ children }: CardsProviderProps) {
       }
     } catch (error) {
       console.error(error)
-      toast.error('Erro ao buscar anúncios.', {
+      toast.error((error as AxiosError).response.data.message, {
         position: 'top-right',
         style: {
           backgroundColor: colors.red[500],
@@ -93,9 +93,10 @@ export function CardsEmployeeProvider({ children }: CardsProviderProps) {
   async function sendLoyaltyData(data: QrCodeData) {
     try {
       await api.post('/create/loyalty', data)
+      toast.success('Cartão fidelidade criado com sucesso!')
     } catch (error) {
       console.error(error)
-      toast.error('Erro ao buscar anúncios.', {
+      toast.error((error as AxiosError).response.data.message, {
         position: 'top-right',
         style: {
           backgroundColor: colors.red[500],

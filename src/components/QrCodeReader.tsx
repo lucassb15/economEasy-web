@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import Webcam from 'react-webcam'
 import QrCodeReader from 'qrcode-reader'
 import { Button } from './Button'
@@ -13,6 +19,24 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
   const webcamRef = useRef<Webcam>(null)
   const [isCameraOpen, setIsCameraOpen] = useState(false)
   const { sendLoyaltyData } = useContext(CardsEmployeeContext)
+  const [intervalId, setIntervalId] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (isCameraOpen) {
+      const id = window.setInterval(capture, 2000) // captura a cada 2 segundos
+      setIntervalId(id)
+    } else {
+      if (intervalId) {
+        window.clearInterval(intervalId)
+        setIntervalId(null)
+      }
+    }
+    return () => {
+      if (intervalId) {
+        window.clearInterval(intervalId)
+      }
+    }
+  }, [isCameraOpen])
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef?.current?.getScreenshot()
@@ -45,12 +69,16 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
             }
             console.log('QR Code encontrado!', value.result)
 
-            const decodedData = JSON.parse(value.result as string)
-            sendLoyaltyData({
-              customerId: decodedData.customerId,
-              token: decodedData.token,
-              companyCardId: companyCardId!,
-            })
+            try {
+              const decodedData = JSON.parse(value.result as string)
+              sendLoyaltyData({
+                customerId: decodedData.customerId,
+                token: decodedData.token,
+                companyCardId: companyCardId!,
+              })
+            } catch (error) {
+              console.error('Erro ao decodificar o JSON do QR code:', error)
+            }
 
             setIsCameraOpen(false)
           }
