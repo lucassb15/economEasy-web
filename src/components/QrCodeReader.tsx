@@ -23,7 +23,7 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
 
   useEffect(() => {
     if (isCameraOpen) {
-      const id = window.setInterval(capture, 2000) // captura a cada 2 segundos
+      const id = window.setInterval(capture, 2000) // captura a cada 2s
       setIntervalId(id)
     } else {
       if (intervalId) {
@@ -31,7 +31,19 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
         setIntervalId(null)
       }
     }
+    // Cleanup function
     return () => {
+      if (webcamRef.current) {
+        // Clear the canvas when the component is unmounted
+        const canvas = webcamRef.current.getCanvas()
+        if (canvas) {
+          const context = canvas.getContext('2d')
+          if (context) {
+            context.clearRect(0, 0, canvas.width, canvas.height)
+          }
+        }
+      }
+
       if (intervalId) {
         window.clearInterval(intervalId)
       }
@@ -95,14 +107,9 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
           <Webcam
             audio={false}
             ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            width={400}
-            height={400}
-          />
-          <Button
-            icon={<QrCode size={24} weight="bold" />}
-            ButtonTitle="Capturar QRcode"
-            onClick={capture}
+            screenshotFormat="image/png"
+            width={300}
+            height={300}
           />
         </>
       ) : (
