@@ -33,8 +33,9 @@ interface UserLoyaltyCardsContextData {
   loyaltyCards: LoyaltyCardProps[]
   fetchLoyaltyCards: () => Promise<void>
   qrCode: string | null
-  generateQRCode: () => Promise<void>
+  generateQRCodeInitial: () => Promise<void>
   error: null | string
+  generateQRCodeCard: (cardId: string, companyCardId: string) => Promise<void>
 }
 
 export const UserLoyaltyCardsContext =
@@ -42,8 +43,9 @@ export const UserLoyaltyCardsContext =
     loyaltyCards: [],
     fetchLoyaltyCards: async () => {},
     qrCode: null,
-    generateQRCode: async () => {},
+    generateQRCodeInitial: async () => {},
     error: null,
+    generateQRCodeCard: async () => {},
   })
 
 interface UserLoyaltyCardsProviderProps {
@@ -81,14 +83,38 @@ export function UserLoyaltyCardsProvider({
     }
   }
 
-  async function generateQRCode() {
+  async function generateQRCodeInitial() {
     if (!userId) return
     try {
       const response = await api.post('/generate/initial', {
         customerId: userId,
       })
       setQRCode(response.data)
-      console.log('Tamanho dos dados:', qrCode?.length, 'Conteúdo:', qrCode)
+    } catch (error) {
+      console.error(error)
+      toast.error((error as AxiosError).response.data.message, {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError((error as AxiosError).response.data.message)
+    }
+  }
+
+  async function generateQRCodeCard(cardId: string, companyCardId: string) {
+    if (!userId) return
+    try {
+      const response = await api.post('/generate/qrcode', {
+        cardId,
+        companyCardId,
+      })
+      setQRCode(response.data)
     } catch (error) {
       console.error(error)
       toast.error((error as AxiosError).response.data.message, {
@@ -113,7 +139,14 @@ export function UserLoyaltyCardsProvider({
 
   return (
     <UserLoyaltyCardsContext.Provider
-      value={{ loyaltyCards, fetchLoyaltyCards, qrCode, generateQRCode, error }}
+      value={{
+        loyaltyCards,
+        fetchLoyaltyCards,
+        qrCode,
+        generateQRCodeInitial,
+        error,
+        generateQRCodeCard,
+      }}
     >
       {children}
     </UserLoyaltyCardsContext.Provider>

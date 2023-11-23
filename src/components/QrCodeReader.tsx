@@ -18,7 +18,8 @@ interface QRReaderProps {
 export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
   const webcamRef = useRef<Webcam>(null)
   const [isCameraOpen, setIsCameraOpen] = useState(false)
-  const { sendLoyaltyData } = useContext(CardsEmployeeContext)
+  const { sendLoyaltyData, sendLoyaltyDataPoints } =
+    useContext(CardsEmployeeContext)
   const [intervalId, setIntervalId] = useState<number | null>(null)
 
   useEffect(() => {
@@ -31,10 +32,9 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
         setIntervalId(null)
       }
     }
-    // Cleanup function
+    // Cleanup
     return () => {
       if (webcamRef.current) {
-        // Clear the canvas when the component is unmounted
         const canvas = webcamRef.current.getCanvas()
         if (canvas) {
           const context = canvas.getContext('2d')
@@ -83,11 +83,22 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
 
             try {
               const decodedData = JSON.parse(value.result as string)
-              sendLoyaltyData({
-                customerId: decodedData.customerId,
-                token: decodedData.token,
-                companyCardId: companyCardId!,
-              })
+              console.log('Decoded Token:', decodedData.token)
+              if (decodedData.companyCardId && decodedData.cardId) {
+                // Se contém companyCardId e cardId, então não é a primeira vez
+                sendLoyaltyDataPoints({
+                  cardId: decodedData.cardId,
+                  companyCardId: companyCardId!,
+                  token: decodedData.token,
+                })
+              } else {
+                // Se não contém companyCardId e cardId, então é a primeira vez
+                sendLoyaltyData({
+                  customerId: decodedData.customerId,
+                  companyCardId: companyCardId!,
+                  token: decodedData.token,
+                })
+              }
             } catch (error) {
               console.error('Erro ao decodificar o JSON do QR code:', error)
             }
@@ -116,7 +127,7 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
         <>
           <Button
             icon={<QrCode size={24} weight="bold" />}
-            ButtonTitle="Ler QR CODE"
+            ButtonTitle="Ler QRcode"
             onClick={() => setIsCameraOpen(true)}
           ></Button>
         </>

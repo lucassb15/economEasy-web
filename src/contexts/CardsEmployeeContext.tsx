@@ -21,9 +21,10 @@ interface AxiosError {
 }
 
 interface QrCodeData {
-  customerId: string
+  customerId?: string
   token: string
   companyCardId: string
+  cardId?: string
 }
 
 interface CardProps {
@@ -38,6 +39,7 @@ interface CardsEmployeeContextData {
   cards: CardProps[]
   fetchCards: () => Promise<void>
   sendLoyaltyData: (data: QrCodeData) => Promise<void>
+  sendLoyaltyDataPoints: (data: QrCodeData) => Promise<void>
   error: null | string
 }
 
@@ -45,6 +47,7 @@ export const CardsEmployeeContext = createContext<CardsEmployeeContextData>({
   cards: [],
   fetchCards: async () => {},
   sendLoyaltyData: async () => {},
+  sendLoyaltyDataPoints: async () => {},
   error: null,
 })
 
@@ -111,9 +114,36 @@ export function CardsEmployeeProvider({ children }: CardsProviderProps) {
     }
   }
 
+  async function sendLoyaltyDataPoints(data: QrCodeData) {
+    try {
+      await api.put('/edit/loyalty', data)
+      toast.success('Pontos adicionados com sucesso!')
+    } catch (error) {
+      console.error(error)
+      toast.error((error as AxiosError).response.data.message, {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError((error as AxiosError).response.data.message)
+    }
+  }
+
   return (
     <CardsEmployeeContext.Provider
-      value={{ cards, fetchCards, sendLoyaltyData, error }}
+      value={{
+        cards,
+        fetchCards,
+        sendLoyaltyData,
+        error,
+        sendLoyaltyDataPoints,
+      }}
     >
       {children}
     </CardsEmployeeContext.Provider>
