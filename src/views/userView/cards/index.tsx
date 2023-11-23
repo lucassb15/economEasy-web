@@ -17,6 +17,8 @@ export function UserCards() {
             loyaltyCards.map((card) => (
               <UserFidelityCard
                 key={card.id}
+                companyId={card.companyId}
+                id={card.id}
                 title={card.name}
                 imageUrl={`http://localhost:3333/${card.image}`}
                 checkedCount={card.currentPoints}
