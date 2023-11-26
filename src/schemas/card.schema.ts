@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const cardSchema = z.object({
   companyId: z.string().min(1, 'ID da empresa é obrigatório'),
   name: z.string().min(1, 'Nome obrigatório'),
+  expirationTime: z.string().min(1, 'Validade do cartão é obrigatório'),
   maxPoints: z
     .string()
     .min(1, 'Quantidade de pontos é obrigatório')

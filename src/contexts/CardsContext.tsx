@@ -26,6 +26,7 @@ interface CardProps {
   name: string
   maxPoints: number
   image: File | null
+  expirationTime: number
 }
 
 interface CardsContextData {
@@ -59,7 +60,13 @@ export function CardsProvider({ children }: CardsProviderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function createCard({ companyId, name, maxPoints, image }: CardProps) {
+  async function createCard({
+    companyId,
+    name,
+    maxPoints,
+    image,
+    expirationTime,
+  }: CardProps) {
     try {
       if (cards.length >= MAX_CARDS_ALLOWED) {
         toast.error(`Você só pode criar até ${MAX_CARDS_ALLOWED} cartão.`, {
@@ -79,6 +86,7 @@ export function CardsProvider({ children }: CardsProviderProps) {
       const formData = new FormData()
       formData.append('companyId', companyId)
       formData.append('name', name)
+      formData.append('expirationTime', expirationTime.toString())
       if (maxPoints !== undefined && !isNaN(maxPoints)) {
         // Verificando se maxPoints está definido e é um número
         formData.append('maxPoints', maxPoints.toString())
