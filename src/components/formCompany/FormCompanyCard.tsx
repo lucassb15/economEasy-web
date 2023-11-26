@@ -6,7 +6,7 @@ import { FormState, SubmitHandler, useForm } from 'react-hook-form'
 import { cardSchema } from '../../schemas/card.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Cards, Check, Image } from '@phosphor-icons/react'
+import { Calendar, Cards, Check, Image } from '@phosphor-icons/react'
 import { Input } from '@components/Input'
 import {
   Button,
@@ -27,6 +27,7 @@ interface CardFormData {
   name: string
   maxPoints: number
   image: FileList
+  expirationTime: number
 }
 
 export function FormCompanyCards({ FormTitle }: FormProps) {
@@ -43,7 +44,7 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
     const success = await createCard({
       companyId: data.companyId,
       name: data.name,
-
+      expirationTime: data.expirationTime,
       maxPoints: Math.floor(data.maxPoints),
       image: data.image[0],
     })
@@ -109,6 +110,19 @@ export function FormCompanyCards({ FormTitle }: FormProps) {
             color={inputTextColor}
             error={errors.maxPoints}
             {...register('maxPoints')}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="maxPoints">Validade do cartão</FormLabel>
+          <Input
+            icon={
+              <Calendar size={24} color={highlightColor} weight="regular" />
+            }
+            type="number"
+            placeholder="Validade do cartão"
+            color={inputTextColor}
+            error={errors.expirationTime}
+            {...register('expirationTime')}
           />
         </FormControl>
         <FormControl>

@@ -10,7 +10,7 @@ import {
   Popover,
   PopoverTrigger,
 } from '@chakra-ui/react'
-import { CheckIcon } from '@chakra-ui/icons'
+import { CheckCircleIcon, CheckIcon } from '@chakra-ui/icons'
 import React, { useContext } from 'react'
 import { UserLoyaltyCardsContext } from '@contexts/UserLoyaltyCardsContext'
 
@@ -21,6 +21,8 @@ interface FidelityCardProps {
   totalCount: number
   id: string
   companyId: string
+  completed: number
+  expirationDate: number
 }
 
 const UserFidelityCard: React.FC<FidelityCardProps> = ({
@@ -30,6 +32,8 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
   totalCount,
   id,
   companyId,
+  completed,
+  expirationDate,
 }) => {
   const { qrCode, generateQRCodeCard } = useContext(UserLoyaltyCardsContext)
 
@@ -59,7 +63,13 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
           />
         ))}
       </HStack>
-      {/* Adicione o botão para gerar o QR code */}
+      <Text className="flex text-center items-center pt-2 pb-1 gap-1">
+        <CheckCircleIcon w={4} h={4} color={'green.500'} /> Completos :{' '}
+        <h1 className="font-medium">{completed}</h1>
+      </Text>
+      <Text className="flex text-center items-center pb-1 gap-1">
+        Expiração de: <h1 className="font-medium">{expirationDate}</h1> dias
+      </Text>
       <Popover>
         <PopoverTrigger>
           <Button

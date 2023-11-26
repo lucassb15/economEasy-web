@@ -23,6 +23,8 @@ export function UserCards() {
                 imageUrl={`http://localhost:3333/${card.image}`}
                 checkedCount={card.currentPoints}
                 totalCount={card.maxPoints}
+                completed={card.xCompleted}
+                expirationDate={card.expirationTime}
               />
             ))
           ) : (

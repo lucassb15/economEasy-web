@@ -25,8 +25,10 @@ interface LoyaltyCardProps {
   companyId: string
   maxPoints: number
   currentPoints: number
+  xCompleted: number
   image: File | null
   name: string
+  expirationTime: number
 }
 
 interface UserLoyaltyCardsContextData {

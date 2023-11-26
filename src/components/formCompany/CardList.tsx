@@ -74,7 +74,7 @@ export function CardList() {
             borderWidth="1px"
             borderRadius="lg"
             w="full"
-            maxW="100%" // Ajuste para permitir que o Box se expanda até o tamanho máximo disponível
+            maxW="100%"
             h="max"
             maxHeight="400px"
             p={4}
@@ -104,6 +104,9 @@ export function CardList() {
                 </Text>
                 <Text fontSize="md" color="gray.500">
                   Quantidade de check-in: {card.maxPoints}
+                </Text>
+                <Text fontSize="md" color="gray.500">
+                  Validade de : {card.expirationTime} dias
                 </Text>
               </VStack>
             </Flex>
