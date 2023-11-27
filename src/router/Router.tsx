@@ -15,6 +15,7 @@ import { NotFound } from '@components/NotFound'
 import { UserCards } from '../views/userView/cards'
 import { UserLoyaltyCardsProvider } from '@contexts/UserLoyaltyCardsContext'
 import { CardsEmployeeProvider } from '@contexts/CardsEmployeeContext'
+import { Perfil } from '../views/companyView/company/perfil'
 export function Router() {
   return (
     <Routes>
@@ -43,6 +44,15 @@ export function Router() {
         element={
           <PrivateRouteCompany>
             <Dashboard />
+          </PrivateRouteCompany>
+        }
+      />
+
+      <Route
+        path="/company/perfil"
+        element={
+          <PrivateRouteCompany>
+            <Perfil />
           </PrivateRouteCompany>
         }
       />
@@ -85,7 +95,7 @@ export function Router() {
         }
       />
 
-      <Route path="/signin" element={<SignIn />} />
+      <Route path="/" element={<SignIn />} />
       <Route path="/register/user" element={<RegisterUser />} />
       <Route path="/register/company" element={<RegisterCompany />} />
       <Route path="*" element={<NotFound />} />

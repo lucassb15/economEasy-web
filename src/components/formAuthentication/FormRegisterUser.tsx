@@ -124,7 +124,7 @@ export function FormRegisterUser({
         <p className="text-xs md:text-sm font-normal text-white">
           Já tem uma conta?
           <Link
-            to="/signin"
+            to="/"
             className="font-semibold underline underline-offset-2 pb-10"
           >
             {' '}

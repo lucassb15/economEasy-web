@@ -68,7 +68,7 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
         <h1 className="font-medium">{completed}</h1>
       </Text>
       <Text className="flex text-center items-center pb-1 gap-1">
-        Expiração de: <h1 className="font-medium">{expirationDate}</h1> dias
+        Validade de: <h1 className="font-medium">{expirationDate}</h1> dias
       </Text>
       <Popover>
         <PopoverTrigger>
