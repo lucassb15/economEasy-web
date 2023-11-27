@@ -17,10 +17,7 @@ export function AccessDenied() {
           Enquanto não encontramos o guarda-roupa mágico, que tal sumir daqui
         </p>
 
-        <Button
-          ButtonTitle="Voltar para casa"
-          onClick={() => navigate('/signin')}
-        />
+        <Button ButtonTitle="Voltar para casa" onClick={() => navigate(-1)} />
       </div>
 
       <div className="flex items-center justify-center">

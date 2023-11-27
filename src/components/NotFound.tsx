@@ -22,7 +22,7 @@ export function NotFound() {
           </p>
           <div className="flex justify-center mt-2">
             <Button
-              onClick={() => navigate('/signin')}
+              onClick={() => navigate(-1)}
               icon={<House size={24} weight="bold" />}
               ButtonTitle="Voltar para página inicial"
             />

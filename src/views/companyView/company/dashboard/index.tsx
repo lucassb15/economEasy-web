@@ -12,10 +12,10 @@ export function Dashboard() {
       {/* Aqui fazer a importação e criação da dashboard */}
       <div className="mx-5 flex-1 p-10">
         <div className=" flex-1 text-2xl font-bold">
-          Dashboard do <span className="text-blue-500"> {user?.name}</span>
+          Dashboard<span className="text-blue-500"> {user?.name}</span>
         </div>
-        <div>Inserir dados para o propietário visualizar</div>
-        <div>
+        <div className="mt-2">
+          <div>Total de pontos por dia</div>
           <ChartPoints />
         </div>
       </div>

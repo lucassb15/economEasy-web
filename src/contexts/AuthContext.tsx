@@ -32,6 +32,7 @@ interface UserProps {
   companyId?: string
   isEmployee?: boolean
   logo?: FileList
+  isActive?: boolean
 }
 
 interface RegisterUserProps {
@@ -62,6 +63,7 @@ interface AuthContextProps {
   registerCompany: (data: RegisterCompanyProps) => Promise<void>
   fetchEmployees: () => Promise<void>
   signOut: () => void
+  updateUser: (updatedUser: Partial<UserProps>) => void
 }
 
 interface AuthProviderProps {
@@ -269,10 +271,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       destroyCookie(null, 'fidelese.token')
       setUser(null)
-      navigate('/signin')
+      navigate('/')
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const updateUser = (updatedUser: Partial<UserProps>) => {
+    setUser((prevUser) => ({
+      ...prevUser!,
+      ...updatedUser,
+    }))
   }
 
   return (
@@ -288,6 +297,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signOut,
         error,
         employees,
+        updateUser,
       }}
     >
       {children}

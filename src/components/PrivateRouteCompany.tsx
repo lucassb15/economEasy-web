@@ -18,7 +18,7 @@ export function PrivateRouteCompany({ children }: any) {
     )
   }
   if (!isAuthenticated) {
-    return <Navigate to="/signin" replace />
+    return <Navigate to="/" replace />
   }
 
   if (isAuthenticated && user?.role !== Roles.Owner) {
