@@ -5,18 +5,23 @@ import { useContext, useState } from 'react'
 export function Perfil() {
   const { user, updateUser } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
+
   const handleToggleActivation = async () => {
     if (user) {
       try {
         setLoading(true)
 
-        const response = await fetch(`colocar a rota do chupeta${user.id}`, {
+        const endpoint = user.isActive
+          ? `http://localhost:3333/disable/company`
+          : `http://localhost:3333/enable/company`
+
+        const response = await fetch(endpoint, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            isActive: !user.isActive,
+            companyId: user.id,
           }),
         })
 
@@ -30,7 +35,19 @@ export function Perfil() {
 
           updateUser(updatedUser)
         } else {
-          console.error('Erro ao alterar o status de ativação do perfil')
+          if (response.status === 404) {
+            console.error('Recurso não encontrado.')
+          } else {
+            try {
+              const errorResponse = await response.json()
+              console.error(
+                'Erro ao alterar o status de ativação do perfil:',
+                errorResponse,
+              )
+            } catch (jsonError) {
+              console.error('Erro de JSON inesperado:', jsonError)
+            }
+          }
         }
       } catch (error) {
         console.error('Erro ao processar a solicitação:', error)
@@ -39,7 +56,9 @@ export function Perfil() {
       }
     }
   }
+
   console.log(user?.isActive)
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       <MenuDashboard />
