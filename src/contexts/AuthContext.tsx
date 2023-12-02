@@ -10,6 +10,7 @@ import { XCircle } from '@phosphor-icons/react'
 import { api } from '../api/api'
 
 import { Roles } from '../@types/Roles'
+import ActivationConfirmationModal from '@components/ActivationConfirmationModal'
 
 interface AxiosError {
   response: {
@@ -78,6 +79,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [employees, setEmployees] = useState<UserProps[]>([])
+  const [isActivationModalOpen, setIsActivationModalOpen] = useState(false)
 
   const navigate = useNavigate()
 
@@ -120,8 +122,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
 
         const userLogged: UserProps = jwtDecode(accessToken)
-        const companyId = userLogged.companyId
-        console.log('companyId:', companyId)
 
         setUser(userLogged)
 
@@ -129,21 +129,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         // Verifica se a conta está inativa após o login
         if (!userLogged?.isActive) {
-          const confirmActivation = window.confirm(
-            'Sua conta está inativa. Deseja ativá-la agora?',
-          )
-
-          if (confirmActivation) {
-            // Atualiza o estado do usuário
-            setUser((prevUser) => ({
-              ...prevUser!,
-              isActive: true,
-            }))
-            console.log('Updated User:', user)
-            const companyId = userLogged.id
-            console.log('companyId:', companyId)
-            await api.put('/enable/company', { companyId })
-          }
+          // const confirmActivation = window.confirm(
+          //   'Sua conta está inativa. Deseja ativá-la agora?',
+          // )
+          setIsActivationModalOpen(true)
+          // if (confirmActivation) {
+          //   // Atualiza o estado do usuário
+          //   setUser((prevUser) => ({
+          //     ...prevUser!,
+          //     isActive: true,
+          //   }))
+          //   console.log('Updated User:', user)
+          //   const companyId = userLogged.id
+          //   console.log('companyId:', companyId)
+          //   await api.put('/enable/company', { companyId })
+          // }
         }
 
         if (userLogged.role === Roles.Owner) {
@@ -305,23 +305,48 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }))
   }
 
+  const handleActivation = async () => {
+    setIsActivationModalOpen(false) // Fecha a modal de confirmação
+    // Atualiza o estado do usuário
+    updateUser({
+      isActive: true,
+    })
+
+    try {
+      const companyId = user?.id
+      if (companyId) {
+        await api.put('/enable/company', { companyId })
+      }
+    } catch (error) {
+      console.error(error)
+      // Lide com o erro, se necessário
+    }
+  }
+
   return (
-    <AuthContext.Provider
-      value={{
-        loading,
-        user,
-        isAuthenticated,
-        signIn,
-        registerUser,
-        registerCompany,
-        fetchEmployees,
-        signOut,
-        error,
-        employees,
-        updateUser,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <>
+      <AuthContext.Provider
+        value={{
+          loading,
+          user,
+          isAuthenticated,
+          signIn,
+          registerUser,
+          registerCompany,
+          fetchEmployees,
+          signOut,
+          error,
+          employees,
+          updateUser,
+        }}
+      >
+        {children}
+      </AuthContext.Provider>
+      <ActivationConfirmationModal
+        isOpen={isActivationModalOpen}
+        onClose={() => setIsActivationModalOpen(false)}
+        onActivate={handleActivation}
+      />
+    </>
   )
 }
