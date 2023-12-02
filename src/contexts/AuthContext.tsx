@@ -121,7 +121,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         const userLogged: UserProps = jwtDecode(accessToken)
         const companyId = userLogged.companyId
-        console.log('companyId:', companyId) // Adicione esta linha
+        console.log('companyId:', companyId)
 
         setUser(userLogged)
 
@@ -141,17 +141,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }))
             console.log('Updated User:', user)
             const companyId = userLogged.id
-            console.log('companyId:', companyId) // Adicione esta linha
+            console.log('companyId:', companyId)
             await api.put('/enable/company', { companyId })
           }
         }
 
         if (userLogged.role === Roles.Owner) {
-          navigate('/company/dashboard')
+          navigate('/company/dashboard') // Owner
         } else if (userLogged.role === Roles.Employee) {
-          navigate('/employee') // Navigate employee
+          navigate('/employee') // Employee
         } else {
-          navigate('/home') // Para o papel "User" e qualquer outro caso
+          navigate('/home') // User
         }
       })
       .catch((error) => {

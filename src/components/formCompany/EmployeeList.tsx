@@ -41,7 +41,7 @@ function EmployeeList() {
             borderWidth="1px"
             borderRadius="lg"
             w="full"
-            maxW="100%" // Ajuste para permitir que o Box se expanda até o tamanho máximo disponível
+            maxW="100%"
             h="max"
             maxHeight="400px"
             p={4}
