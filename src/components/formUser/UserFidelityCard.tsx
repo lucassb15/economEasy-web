@@ -23,6 +23,7 @@ interface FidelityCardProps {
   companyId: string
   completed: number
   expirationDate: number
+  companyName: string
 }
 
 const UserFidelityCard: React.FC<FidelityCardProps> = ({
@@ -34,25 +35,41 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
   companyId,
   completed,
   expirationDate,
+  companyName,
 }) => {
   const { qrCode, generateQRCodeCard } = useContext(UserLoyaltyCardsContext)
 
   const handleGenerateQRCode = () => {
     generateQRCodeCard(id, companyId)
   }
+
+  const formatExpirationDate = (days: number): string => {
+    const today = new Date()
+    const expiration = new Date(today)
+    expiration.setDate(today.getDate() + days)
+
+    const day = expiration.getDate().toString().padStart(2, '0')
+    const month = (expiration.getMonth() + 1).toString().padStart(2, '0')
+    const year = expiration.getFullYear().toString().slice(2)
+
+    return `${day}/${month}/${year}`
+  }
+
   return (
     <Box
-      maxW="sm"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       boxShadow="xl"
       p={4}
-      m={4}
+      mb={4}
     >
       <Image src={imageUrl} alt={title} w="100%" h="200px" objectFit="cover" />
-      <Text fontWeight="bold" fontSize="2xl" mt={4}>
-        {title}
+      <Text fontWeight="bold" fontSize="large" mt={4}>
+        Empresa: {companyName}
+      </Text>
+      <Text fontWeight="bold" fontSize="large" mt={1}>
+        Cartão: {title}
       </Text>
       <HStack mt={2} spacing={2}>
         {Array.from({ length: totalCount }).map((_, index) => (
@@ -68,7 +85,8 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
         <h1 className="font-medium">{completed}</h1>
       </Text>
       <Text className="flex text-center items-center pb-1 gap-1">
-        Validade de: <h1 className="font-medium">{expirationDate}</h1> dias
+        Valido até:{' '}
+        <h1 className="font-medium">{formatExpirationDate(expirationDate)}</h1>
       </Text>
       <Popover>
         <PopoverTrigger>

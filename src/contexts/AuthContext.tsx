@@ -111,7 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         password,
       })
-      .then((response) => {
+      .then(async (response) => {
         const { accessToken } = response.data
 
         setCookie(undefined, 'fidelese.token', accessToken, {
@@ -120,10 +120,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
 
         const userLogged: UserProps = jwtDecode(accessToken)
+        const companyId = userLogged.companyId
+        console.log('companyId:', companyId) // Adicione esta linha
 
         setUser(userLogged)
 
         api.defaults.headers.Authorization = `Bearer ${accessToken}`
+
+        // Verifica se a conta está inativa após o login
+        if (!userLogged?.isActive) {
+          const confirmActivation = window.confirm(
+            'Sua conta está inativa. Deseja ativá-la agora?',
+          )
+
+          if (confirmActivation) {
+            // Atualiza o estado do usuário
+            setUser((prevUser) => ({
+              ...prevUser!,
+              isActive: true,
+            }))
+            console.log('Updated User:', user)
+            const companyId = userLogged.id
+            console.log('companyId:', companyId) // Adicione esta linha
+            await api.put('/enable/company', { companyId })
+          }
+        }
 
         if (userLogged.role === Roles.Owner) {
           navigate('/company/dashboard')
