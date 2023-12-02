@@ -29,6 +29,7 @@ interface LoyaltyCardProps {
   image: File | null
   name: string
   expirationTime: number
+  companyName: string
 }
 
 interface UserLoyaltyCardsContextData {
