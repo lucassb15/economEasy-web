@@ -26,6 +26,7 @@ interface LoyaltyCardProps {
   maxPoints: number
   currentPoints: number
   xCompleted: number
+  redeem: number
   image: File | null
   name: string
   expirationTime: number
@@ -39,6 +40,7 @@ interface UserLoyaltyCardsContextData {
   generateQRCodeInitial: () => Promise<void>
   error: null | string
   generateQRCodeCard: (cardId: string, companyCardId: string) => Promise<void>
+  generateQRCodeRedeem: (cardId: string, companyCardId: string) => Promise<void>
 }
 
 export const UserLoyaltyCardsContext =
@@ -49,6 +51,7 @@ export const UserLoyaltyCardsContext =
     generateQRCodeInitial: async () => {},
     error: null,
     generateQRCodeCard: async () => {},
+    generateQRCodeRedeem: async () => {},
   })
 
 interface UserLoyaltyCardsProviderProps {
@@ -135,6 +138,31 @@ export function UserLoyaltyCardsProvider({
     }
   }
 
+  async function generateQRCodeRedeem(cardId: string, companyCardId: string) {
+    if (!userId) return
+    try {
+      const response = await api.post('/generate/qrcode', {
+        cardId,
+        companyCardId,
+      })
+      setQRCode(response.data)
+    } catch (error) {
+      console.error(error)
+      toast.error((error as AxiosError).response.data.message, {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError((error as AxiosError).response.data.message)
+    }
+  }
+
   useEffect(() => {
     fetchLoyaltyCards()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,6 +177,7 @@ export function UserLoyaltyCardsProvider({
         generateQRCodeInitial,
         error,
         generateQRCodeCard,
+        generateQRCodeRedeem,
       }}
     >
       {children}
