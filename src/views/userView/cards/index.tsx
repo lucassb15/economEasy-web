@@ -3,7 +3,7 @@ import { UserLoyaltyCardsContext } from '@contexts/UserLoyaltyCardsContext'
 import UserFidelityCard from '@components/formUser/UserFidelityCard'
 import { Header } from '../../../components/Header'
 import { UserQRcodeGenerator } from '@components/formUser/UserQRcodeGenerator'
-import { Box, Heading, Input } from '@chakra-ui/react'
+import { Alert, Box, Heading, Input } from '@chakra-ui/react'
 
 export function UserCards() {
   const { loyaltyCards } = useContext(UserLoyaltyCardsContext)
@@ -39,10 +39,15 @@ export function UserCards() {
                 completed={card.xCompleted}
                 expirationDate={card.expirationTime}
                 companyName={card.companyName}
+                redeem={card.redeem}
               />
             ))
           ) : (
-            <p>Nenhum cartão de fidelidade disponível para a pesquisa.</p>
+            <div>
+              <Alert status="warning">
+                Nenhum cartão de fidelidade disponível para a pesquisa.
+              </Alert>
+            </div>
           )}
         </div>
       </div>
