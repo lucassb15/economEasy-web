@@ -92,7 +92,7 @@ export const QRReader: React.FC<QRReaderProps> = ({ companyCardId }) => {
                   token: decodedData.token,
                 })
               } else {
-                // Se não contém companyCardId e cardId, então é a primeira vez
+                // Se contem customerID então é a primeira vez
                 sendLoyaltyData({
                   customerId: decodedData.customerId,
                   companyCardId: companyCardId!,

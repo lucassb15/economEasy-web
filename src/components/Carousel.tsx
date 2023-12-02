@@ -30,7 +30,7 @@ export function Carousel() {
 
   const settings = {
     arrows: true,
-    slidesToShow: Math.min(filteredAds.length, 3), // Modificado aqui
+    slidesToShow: Math.min(filteredAds.length, 3),
     slidesToScroll: 1,
     infinite: filteredAds.length > 1,
     prevArrow: <SliderArrow direction="left" icon={<CaretLeft size={48} />} />,
