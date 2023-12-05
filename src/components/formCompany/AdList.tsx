@@ -23,12 +23,12 @@ import {
   useDisclosure,
   Grid,
 } from '@chakra-ui/react'
-import { Trash, XCircle } from '@phosphor-icons/react'
+import { Star, Trash, XCircle } from '@phosphor-icons/react'
 import toast from 'react-hot-toast'
 import colors from 'tailwindcss/colors'
 
 function AdList() {
-  const { ads, fetchAds, deleteAd, error } = useContext(AdsContext)
+  const { ads, fetchAds, deleteAd, highlightAd, error } = useContext(AdsContext)
 
   const [activePopover, setActivePopover] = useState<string | null>(null)
   const { onOpen, onClose } = useDisclosure()
@@ -165,6 +165,80 @@ function AdList() {
                       onClick={() => {
                         if (ad.id) {
                           deleteAd(ad.id)
+                        } else {
+                          toast.error('Erro ao buscar anúncios.', {
+                            position: 'top-right',
+                            style: {
+                              backgroundColor: colors.red[500],
+                              color: colors.white,
+                              fontSize: 16,
+                              fontWeight: 500,
+                              padding: 16,
+                            },
+                            icon: (
+                              <XCircle
+                                size={54}
+                                weight="fill"
+                                className="text-gray-50"
+                              />
+                            ),
+                          })
+                        }
+                      }}
+                    >
+                      Sim
+                    </Button>
+                  </Flex>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+
+            <Popover
+              isOpen={activePopover === ad.id}
+              onClose={() => {
+                setActivePopover(null)
+                onClose()
+              }}
+              closeOnBlur={false}
+              placement="top-end"
+            >
+              <IconButton
+                position="absolute"
+                top={2}
+                left={2}
+                p={3}
+                aria-label="Highlight"
+                icon={<Star size={24} color="yellow" weight="bold" />}
+                onClick={() => {
+                  setActivePopover(ad.id ?? null)
+                  onOpen()
+                }}
+                variant="solid"
+                colorScheme={ad.isPremium ? 'yellow' : 'blue'}
+                backgroundColor={ad.isPremium ? 'transparent' : 'transparent'}
+              />
+
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Anúncio!</PopoverHeader>
+                <PopoverBody>
+                  Deseja destacar seu anúncio?
+                  <Flex justifyContent="space-between" mt={4}>
+                    <Button
+                      colorScheme="green"
+                      onClick={() => {
+                        setActivePopover(null)
+                        onClose()
+                      }}
+                    >
+                      Não
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={() => {
+                        if (ad.id) {
+                          highlightAd(ad.id)
                         } else {
                           toast.error('Erro ao buscar anúncios.', {
                             position: 'top-right',

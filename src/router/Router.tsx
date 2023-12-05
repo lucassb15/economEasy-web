@@ -16,6 +16,7 @@ import { UserCards } from '../views/userView/cards'
 import { UserLoyaltyCardsProvider } from '@contexts/UserLoyaltyCardsContext'
 import { CardsEmployeeProvider } from '@contexts/CardsEmployeeContext'
 import { Perfil } from '../views/companyView/company/perfil'
+import { Pricing } from '../views/companyView/company/pricing'
 export function Router() {
   return (
     <Routes>
@@ -53,6 +54,15 @@ export function Router() {
         element={
           <PrivateRouteCompany>
             <Perfil />
+          </PrivateRouteCompany>
+        }
+      />
+
+      <Route
+        path="/company/pricing"
+        element={
+          <PrivateRouteCompany>
+            <Pricing />
           </PrivateRouteCompany>
         }
       />

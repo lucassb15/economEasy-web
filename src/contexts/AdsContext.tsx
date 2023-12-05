@@ -22,6 +22,7 @@ interface AdProps {
   price?: number
   image: File | null
   priority?: boolean
+  isPremium: boolean
 }
 
 interface AdsContextData {
@@ -30,6 +31,7 @@ interface AdsContextData {
   fetchAds: () => Promise<void>
   fetchAdsUser: () => Promise<void>
   deleteAd: (adId: string) => Promise<void>
+  highlightAd: (adId: string) => Promise<void>
   error: null | string
 }
 
@@ -39,6 +41,7 @@ export const AdsContext = createContext<AdsContextData>({
   fetchAds: async () => {},
   fetchAdsUser: async () => {},
   deleteAd: async () => {},
+  highlightAd: async () => {},
   error: null,
 })
 
@@ -168,9 +171,49 @@ export function AdsProvider({ children }: AdsProviderProps) {
     }
   }
 
+  async function highlightAd(adId: string) {
+    if (!adId) {
+      console.error('Ad ID is undefined')
+      return
+    }
+    try {
+      await api.delete(`delete/ad/${adId}`)
+      console.log('Ad ID:', adId)
+
+      setAds((prevAds) => prevAds.filter((ad) => ad.id !== adId))
+
+      toast.success('Anúncio deletado com sucesso!')
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
+    } catch (error) {
+      console.log(error)
+      toast.error((error as AxiosError).response.data.message, {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
+      setError((error as AxiosError).response.data.message)
+    }
+  }
+
   return (
     <AdsContext.Provider
-      value={{ ads, createAd, fetchAds, error, deleteAd, fetchAdsUser }}
+      value={{
+        ads,
+        createAd,
+        fetchAds,
+        error,
+        deleteAd,
+        fetchAdsUser,
+        highlightAd,
+      }}
     >
       {children}
     </AdsContext.Provider>
