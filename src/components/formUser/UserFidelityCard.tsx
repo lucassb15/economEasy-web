@@ -22,7 +22,7 @@ interface FidelityCardProps {
   id: string
   companyId: string
   completed: number
-  redeem: number
+  pendingRedeems: number
   expirationDate: number
   companyName: string
 }
@@ -37,9 +37,9 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
   completed,
   expirationDate,
   companyName,
-  redeem,
+  pendingRedeems,
 }) => {
-  const { qrCode, generateQRCodeCard, generateQRCodeRedeem } = useContext(
+  const { qrCode, generateQRCodeCard, Redeem } = useContext(
     UserLoyaltyCardsContext,
   )
 
@@ -48,10 +48,10 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
   }
 
   const handleGenerateQRCodeRedeem = () => {
-    generateQRCodeRedeem(id, companyId)
+    Redeem(id)
   }
 
-  console.log(redeem)
+  console.log(pendingRedeems)
   const formatExpirationDate = (days: number): string => {
     const today = new Date()
     const expiration = new Date(today)
@@ -102,6 +102,10 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
             {formatExpirationDate(expirationDate)}
           </Text>
         </Text>
+        <Text className="flex text-center items-center pb-1 gap-1">
+          Resgates restantes:{' '}
+          <Text className="font-medium">{pendingRedeems}</Text>
+        </Text>
       </div>
       <div className="flex justify-between">
         <Popover>
@@ -120,23 +124,46 @@ const UserFidelityCard: React.FC<FidelityCardProps> = ({
             {qrCode && <Image src={qrCode} alt="Generated QR Code" w="250px" />}
           </PopoverContent>
         </Popover>
-        <Popover>
-          <PopoverTrigger>
-            <Button
-              className="mt-2"
-              colorScheme="green"
-              backgroundColor="green.500"
-              onClick={handleGenerateQRCodeRedeem}
+        {pendingRedeems > 0 && (
+          <Popover>
+            <PopoverTrigger>
+              <div>
+                <Button
+                  className="mt-2"
+                  colorScheme="green"
+                  backgroundColor="green.500"
+                >
+                  Resgatar
+                </Button>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent
+              bgColor="rgba(0, 0, 0, 0.9)"
+              color="white"
+              borderRadius="md"
+              p={4}
+              maxWidth="300px"
             >
-              Resgatar
-            </Button>
-          </PopoverTrigger>
-
-          <PopoverContent bgColor="rgba(0, 0, 0, 0.7)" color="white">
-            <PopoverCloseButton />
-            {qrCode && <Image src={qrCode} alt="Generated QR Code" w="250px" />}
-          </PopoverContent>
-        </Popover>
+              <PopoverCloseButton color="white" />
+              <Text textAlign="center" fontSize="lg" fontWeight="bold" mb={3}>
+                Resgate Confirmado!
+              </Text>
+              <Text textAlign="center" mb={3}>
+                Parabéns! Você concluiu o resgate do seu cartão de fidelidade.
+                Apresente esta mensagem no estabelecimento para confirmar a
+                transação.
+              </Text>
+              <Button
+                colorScheme="green"
+                variant="solid"
+                width="100%"
+                onClick={handleGenerateQRCodeRedeem}
+              >
+                Concluir Resgate
+              </Button>
+            </PopoverContent>
+          </Popover>
+        )}
       </div>
     </Box>
   )

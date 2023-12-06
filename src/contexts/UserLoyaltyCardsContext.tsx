@@ -26,7 +26,7 @@ interface LoyaltyCardProps {
   maxPoints: number
   currentPoints: number
   xCompleted: number
-  redeem: number
+  pendingRedeems: number
   image: File | null
   name: string
   expirationTime: number
@@ -40,7 +40,7 @@ interface UserLoyaltyCardsContextData {
   generateQRCodeInitial: () => Promise<void>
   error: null | string
   generateQRCodeCard: (cardId: string, companyCardId: string) => Promise<void>
-  generateQRCodeRedeem: (cardId: string, companyCardId: string) => Promise<void>
+  Redeem: (cardId: string) => Promise<void>
 }
 
 export const UserLoyaltyCardsContext =
@@ -51,7 +51,7 @@ export const UserLoyaltyCardsContext =
     generateQRCodeInitial: async () => {},
     error: null,
     generateQRCodeCard: async () => {},
-    generateQRCodeRedeem: async () => {},
+    Redeem: async () => {},
   })
 
 interface UserLoyaltyCardsProviderProps {
@@ -138,14 +138,17 @@ export function UserLoyaltyCardsProvider({
     }
   }
 
-  async function generateQRCodeRedeem(cardId: string, companyCardId: string) {
+  async function Redeem(cardId: string) {
     if (!userId) return
     try {
-      const response = await api.post('/generate/qrcode', {
+      const response = await api.put('/redeem', {
         cardId,
-        companyCardId,
       })
       setQRCode(response.data)
+      toast.success('Cartão resgatado com sucesso!!')
+      setTimeout(() => {
+        location.reload()
+      }, 1000)
     } catch (error) {
       console.error(error)
       toast.error((error as AxiosError).response.data.message, {
@@ -177,7 +180,7 @@ export function UserLoyaltyCardsProvider({
         generateQRCodeInitial,
         error,
         generateQRCodeCard,
-        generateQRCodeRedeem,
+        Redeem,
       }}
     >
       {children}
