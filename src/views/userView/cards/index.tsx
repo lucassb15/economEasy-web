@@ -12,7 +12,6 @@ export function UserCards() {
   const filteredCards = loyaltyCards.filter((card) =>
     card.companyName.toLowerCase().includes(searchTerm.toLowerCase()),
   )
-
   return (
     <div>
       <Header title={'Cliente'} />
@@ -39,7 +38,7 @@ export function UserCards() {
                 completed={card.xCompleted}
                 expirationDate={card.expirationTime}
                 companyName={card.companyName}
-                redeem={card.redeem}
+                pendingRedeems={card.pendingRedeems}
               />
             ))
           ) : (
