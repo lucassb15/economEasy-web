@@ -30,7 +30,13 @@ import colors from 'tailwindcss/colors'
 function AdList() {
   const { ads, fetchAds, deleteAd, highlightAd, error } = useContext(AdsContext)
 
-  const [activePopover, setActivePopover] = useState<string | null>(null)
+  const [activeDeletePopover, setActiveDeletePopover] = useState<string | null>(
+    null,
+  )
+  const [activeHighlightPopover, setActiveHighlightPopover] = useState<
+    string | null
+  >(null)
+
   const { onOpen, onClose } = useDisclosure()
 
   const imageSize = useBreakpointValue({
@@ -62,8 +68,8 @@ function AdList() {
       </Alert>
     )
   }
-  if (activePopover) {
-    console.log(activePopover)
+  if (activeHighlightPopover) {
+    console.log(activeHighlightPopover)
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -90,7 +96,11 @@ function AdList() {
             bg={bgColor}
             _hover={{ transform: 'scale(1.05)', boxShadow: 'xl' }}
             transition="all 0.3s ease-in-out"
-            zIndex={activePopover === ad.id ? 10 : 1}
+            zIndex={
+              activeDeletePopover === ad.id || activeHighlightPopover === ad.id
+                ? 10
+                : 1
+            }
           >
             <Flex
               justifyContent="start"
@@ -121,9 +131,9 @@ function AdList() {
             </Flex>
 
             <Popover
-              isOpen={activePopover === ad.id}
+              isOpen={activeDeletePopover === ad.id}
               onClose={() => {
-                setActivePopover(null)
+                setActiveDeletePopover(null)
                 onClose()
               }}
               closeOnBlur={false}
@@ -137,7 +147,7 @@ function AdList() {
                 aria-label="Delete"
                 icon={<Trash size={24} color="white" weight="bold" />}
                 onClick={() => {
-                  setActivePopover(ad.id ?? null)
+                  setActiveDeletePopover(ad.id ?? null)
                   onOpen()
                 }}
                 variant="solid"
@@ -154,7 +164,7 @@ function AdList() {
                     <Button
                       colorScheme="green"
                       onClick={() => {
-                        setActivePopover(null)
+                        setActiveDeletePopover(null)
                         onClose()
                       }}
                     >
@@ -194,9 +204,9 @@ function AdList() {
             </Popover>
 
             <Popover
-              isOpen={activePopover === ad.id}
+              isOpen={activeHighlightPopover === ad.id}
               onClose={() => {
-                setActivePopover(null)
+                setActiveHighlightPopover(null)
                 onClose()
               }}
               closeOnBlur={false}
@@ -208,14 +218,25 @@ function AdList() {
                 left={2}
                 p={3}
                 aria-label="Highlight"
-                icon={<Star size={24} color="yellow" weight="bold" />}
+                icon={
+                  <Star
+                    size={24}
+                    weight={ad.isPriority ? 'fill' : 'bold'}
+                    color={ad.isPriority ? 'yellow' : 'yellow'}
+                  />
+                }
                 onClick={() => {
-                  setActivePopover(ad.id ?? null)
+                  setActiveHighlightPopover(ad.id ?? null)
                   onOpen()
                 }}
                 variant="solid"
-                colorScheme={ad.isPremium ? 'yellow' : 'blue'}
-                backgroundColor={ad.isPremium ? 'transparent' : 'transparent'}
+                colorScheme="transparent" // Use uma cor transparente
+                backgroundColor="transparent" // Use uma cor transparente
+                _hover={{
+                  backgroundColor: ad.isPriority
+                    ? 'transparent'
+                    : 'transparent', // Use uma cor transparente durante o hover
+                }}
               />
 
               <PopoverContent>
@@ -226,19 +247,11 @@ function AdList() {
                   Deseja destacar seu anúncio?
                   <Flex justifyContent="space-between" mt={4}>
                     <Button
-                      colorScheme="green"
-                      onClick={() => {
-                        setActivePopover(null)
-                        onClose()
-                      }}
-                    >
-                      Não
-                    </Button>
-                    <Button
+                      width="full"
                       colorScheme="red"
                       onClick={() => {
                         if (ad.id) {
-                          highlightAd(ad.id)
+                          highlightAd(ad.id, ad.isPriority === false)
                         } else {
                           toast.error('Erro ao buscar anúncios.', {
                             position: 'top-right',
@@ -260,7 +273,7 @@ function AdList() {
                         }
                       }}
                     >
-                      Sim
+                      {ad.isPriority ? 'Não' : 'Sim'}
                     </Button>
                   </Flex>
                 </PopoverBody>

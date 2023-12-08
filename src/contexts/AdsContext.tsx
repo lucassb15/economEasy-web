@@ -21,8 +21,7 @@ interface AdProps {
   name?: string
   price?: number
   image: File | null
-  priority?: boolean
-  isPremium: boolean
+  isPriority?: boolean
 }
 
 interface AdsContextData {
@@ -31,7 +30,7 @@ interface AdsContextData {
   fetchAds: () => Promise<void>
   fetchAdsUser: () => Promise<void>
   deleteAd: (adId: string) => Promise<void>
-  highlightAd: (adId: string) => Promise<void>
+  highlightAd: (adId: string, isPriority: boolean) => Promise<void>
   error: null | string
 }
 
@@ -171,24 +170,36 @@ export function AdsProvider({ children }: AdsProviderProps) {
     }
   }
 
-  async function highlightAd(adId: string) {
+  async function highlightAd(adId: string, isPriority: boolean | undefined) {
     if (!adId) {
       console.error('Ad ID is undefined')
       return
     }
+
     try {
-      await api.delete(`delete/ad/${adId}`)
-      console.log('Ad ID:', adId)
+      if (isPriority !== undefined) {
+        await api.put('/updatePriority/ad', { adId, isPriority })
 
-      setAds((prevAds) => prevAds.filter((ad) => ad.id !== adId))
+        // Atualize o estado ou realize outras operações necessárias após o sucesso.
 
-      toast.success('Anúncio deletado com sucesso!')
-      setTimeout(() => {
-        window.location.reload()
-      }, 1000)
+        toast.success(
+          `Prioridade do anúncio ${
+            isPriority ? 'ativada' : 'desativada'
+          } com sucesso!`,
+        )
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
+      } else {
+        console.error(
+          'O valor de isPriority é undefined. Certifique-se de fornecer um valor booleano.',
+        )
+      }
     } catch (error) {
       console.log(error)
-      toast.error((error as AxiosError).response.data.message, {
+
+      // Trate erros e exiba mensagens de erro se necessário.
+      toast.error('Erro ao atualizar a prioridade do anúncio.', {
         position: 'top-right',
         style: {
           backgroundColor: colors.red[500],
@@ -199,7 +210,6 @@ export function AdsProvider({ children }: AdsProviderProps) {
         },
         icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
       })
-      setError((error as AxiosError).response.data.message)
     }
   }
 
