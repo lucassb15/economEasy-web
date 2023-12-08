@@ -33,7 +33,7 @@ export function UserAdList() {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const bgColor = useColorModeValue('white', '#262626')
-  const nonPriorityAds = ads.filter((ad) => !ad.priority)
+  const nonPriorityAds = ads.filter((ad) => !ad.isPriority)
 
   return (
     <Grid

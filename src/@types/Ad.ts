@@ -5,5 +5,5 @@ export interface AdProps {
   name: string
   price: number
   image: File | null
-  priority: boolean
+  isPriority: boolean
 }

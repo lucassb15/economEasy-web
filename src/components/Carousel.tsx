@@ -26,7 +26,7 @@ export function Carousel() {
   }, [])
 
   const bgColor = useColorModeValue('white', '#262626')
-  const filteredAds = ads.filter((ad) => ad.priority)
+  const filteredAds = ads.filter((ad) => ad.isPriority)
 
   const settings = {
     arrows: true,
