@@ -244,7 +244,9 @@ function AdList() {
                 <PopoverCloseButton />
                 <PopoverHeader>Anúncio!</PopoverHeader>
                 <PopoverBody>
-                  Deseja destacar seu anúncio?
+                  {ad.isPriority
+                    ? 'Deseja remover destaque do anúncio?'
+                    : 'Deseja destacar seu anúncio?'}
                   <Flex justifyContent="space-between" mt={4}>
                     <Button
                       width="full"
@@ -273,7 +275,7 @@ function AdList() {
                         }
                       }}
                     >
-                      {ad.isPriority ? 'Não' : 'Sim'}
+                      Sim
                     </Button>
                   </Flex>
                 </PopoverBody>
