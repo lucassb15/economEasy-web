@@ -7,7 +7,7 @@ import { signInSchema } from '../../schemas/user.schema'
 
 import LogoFidelese from '../../assets/LogoFidelese.svg'
 
-import { Envelope, LockKey, GoogleLogo } from '@phosphor-icons/react'
+import { Envelope, LockKey } from '@phosphor-icons/react'
 import { Input } from '../Input'
 
 interface FormProps {
@@ -82,15 +82,6 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
           Esqueceu sua senha?
         </p>
       </div>
-      <div className="flex flex-row items-center gap-2 w-full">
-        <hr className="border border-gray-300 w-full"></hr>
-        <p className="text-sm font-medium text-gray-500">OU</p>
-        <hr className="border border-gray-300 w-full" />
-      </div>
-      <button className="bg-darkblue hover:bg-darkblue-hover w-full flex-row flex items-center justify-center gap-3 text-white font-bold py-2 md:py-3 px-4 rounded shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-opacity-50">
-        <GoogleLogo size={20} weight="bold" />
-        <h3 className="text-sm md:text-base">Logar-se com Google</h3>
-      </button>
       <div className="flex items-center justify-start flex-col">
         <div className="w-full flex mt-5">
           <p className="text-xs md:text-sm font-normal">
