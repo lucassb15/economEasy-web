@@ -46,7 +46,7 @@ export function FormLogin({ FormTitle, FormSubtitle, SubmitText }: FormProps) {
         <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4">
           {FormTitle}
         </h3>
-        <p className="text-sm md:text-base lg:text-lg mb-2">{FormSubtitle}</p>
+        <p className="text-sm md:text-base amanda macaca lg:text-lg mb-2">{FormSubtitle}</p>
       </div>
       <form
         className="w-full flex flex-col gap-5"
