@@ -47,13 +47,12 @@ export function Header({ title }: FormHeaderProps) {
 
   return (
     <div
-      className={`flex h-20 w-full items-center justify-between px-5 md:px-28 transition-all border-b-2 shadow-md ease-in-out duration-500 bg-${bg} text-${textColor}`}
+      className={`flex h-20 w-[100%] items-center justify-between px-4 md:w-full md:px-10 lg:px-28 transition-all border-b-2 shadow-md ease-in-out duration-500 bg-${bg} text-${textColor} overflow-x-hidden`}
     >
-      <span className="font-title text-xl font-semibold">{title}</span>
-
-      <div className="flex items-center space-x-4 md:space-x-0 md:mx-0">
+      <span className="font-title text-xl font-semibold truncate">{title}</span>
+      <div className="flex items-center space-x-2 md:space-x-4">
         {user?.isEmployee ? (
-          <div className="hidden md:flex space-x-4 items-center">
+          <div className="hidden md:flex space-x-2 md:space-x-4 items-center">
             <ButtonHeader
               icon={<Megaphone />}
               ButtonTitle="Teste"
@@ -62,7 +61,7 @@ export function Header({ title }: FormHeaderProps) {
             <span className="font-medium">{user?.name}</span>
           </div>
         ) : (
-          <div className="hidden md:flex space-x-4 items-center">
+          <div className="hidden md:flex space-x-2 md:space-x-4 items-center">
             <ButtonHeader
               icon={<Megaphone />}
               ButtonTitle="Ver anúncios"
@@ -77,51 +76,26 @@ export function Header({ title }: FormHeaderProps) {
           </div>
         )}
 
-        {user?.isEmployee ? (
-          <Popover isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
-            <PopoverTrigger>
-              <button
-                className="md:hidden text-2xl focus:outline-none"
-                onClick={() => setMenuOpen((prev) => !prev)}
-              >
-                <List />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
-              <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
-                <ButtonHeader
-                  icon={<Megaphone />}
-                  ButtonTitle="Teste"
-                  onClick={() => navigate('/employee')}
-                />
-              </Box>
-              <Box p={4}>
-                <ButtonHeader
-                  icon={<SignOut />}
-                  ButtonTitle="Sair"
-                  onClick={handleSignOut}
-                />
-              </Box>
-            </PopoverContent>
-          </Popover>
-        ) : (
-          <Popover isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
-            <PopoverTrigger>
-              <button
-                className="md:hidden text-2xl focus:outline-none"
-                onClick={() => setMenuOpen((prev) => !prev)}
-              >
-                <List />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
-              <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
-                <ButtonHeader
-                  icon={<Megaphone />}
-                  ButtonTitle="Ver anúncios"
-                  onClick={() => navigate('/home')}
-                />
-              </Box>
+        <Popover isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
+          <PopoverTrigger>
+            <button
+              className="md:hidden text-2xl focus:outline-none"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              <List />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent bg={bg} boxShadow={shadow} rounded="md">
+            <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
+              <ButtonHeader
+                icon={<Megaphone />}
+                ButtonTitle={user?.isEmployee ? 'Teste' : 'Ver anúncios'}
+                onClick={() =>
+                  navigate(user?.isEmployee ? '/employee' : '/home')
+                }
+              />
+            </Box>
+            {user && !user.isEmployee && (
               <Box p={4} borderBottom="1px solid" borderColor={borderColor}>
                 <ButtonHeader
                   icon={<Cards />}
@@ -129,19 +103,19 @@ export function Header({ title }: FormHeaderProps) {
                   onClick={() => navigate('/user/cards')}
                 />
               </Box>
-              <Box p={4}>
-                <ButtonHeader
-                  icon={<SignOut />}
-                  ButtonTitle="Sair"
-                  onClick={handleSignOut}
-                />
-              </Box>
-            </PopoverContent>
-          </Popover>
-        )}
+            )}
+            <Box p={4}>
+              <ButtonHeader
+                icon={<SignOut />}
+                ButtonTitle="Sair"
+                onClick={handleSignOut}
+              />
+            </Box>
+          </PopoverContent>
+        </Popover>
 
         <button
-          className="hidden md:block md:p-2 focus:outline-none"
+          className="hidden md:block p-2 focus:outline-none"
           onClick={handleSignOut}
         >
           <SignOut size={24} />

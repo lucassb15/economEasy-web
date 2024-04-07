@@ -5,9 +5,9 @@ import { Carousel } from '@components/Carousel'
 import { Heading } from '@chakra-ui/react'
 export function Home() {
   return (
-    <div>
+    <div className="flex flex-col">
       <Header title={'Cliente'} />
-      <div className="px-28 py-10">
+      <div className="px-5 py-5 md:px-28 md:py-10">
         <Heading fontSize={24}>Anúncios em destaque</Heading>
         <div className="flex flex-col gap-5 mt-10">
           <AdsProvider>

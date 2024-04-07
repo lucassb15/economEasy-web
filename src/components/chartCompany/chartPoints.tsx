@@ -1,11 +1,17 @@
-import { AuthContext } from '@contexts/AuthContext'
 import React, { useState, useEffect, useContext } from 'react'
-import { BarChart, Bar, XAxis, ResponsiveContainer, Tooltip } from 'recharts'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+} from 'recharts'
+import { AuthContext } from '@contexts/AuthContext'
 
 type DataPoint = {
   date: string
-  point: number
-  completed: number
+  count: number
 }
 
 export function dateToParams(date: Date) {
@@ -14,66 +20,79 @@ export function dateToParams(date: Date) {
 
 const ChartPoints: React.FC = () => {
   const { user } = useContext(AuthContext)
-  const [chartData, setChartData] = useState<DataPoint[]>([])
+  const [pointsData, setPointsData] = useState<DataPoint[]>([])
+  const [completionData, setCompletionData] = useState<DataPoint[]>([])
 
   useEffect(() => {
-    const type = 'POINT'
-    const startDate = dateToParams(new Date('2023-01-01'))
-    const endDate = dateToParams(new Date('2023-12-31'))
+    const startDate = dateToParams(new Date('2024-01-01'))
+    const endDate = dateToParams(new Date('2024-12-31'))
 
-    const apiUrl = `http://localhost:3333/stats/${user?.id}/${type}/${startDate}-${endDate}`
+    const apiUrl = `http://localhost:3333/stats/${user?.id}/POINT/${startDate}-${endDate}`
 
     const fetchData = async () => {
       try {
         const response = await fetch(apiUrl)
         const dataFromBackend = await response.json()
 
-        // Consolidar os pontos por data
-        const aggregatedData: Record<string, DataPoint> = {}
+        const points: Record<string, number> = {}
+        const completions: Record<string, number> = {}
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dataFromBackend.forEach((item: any) => {
           const dateKey = new Date(item.date).toISOString().substring(0, 10)
 
-          if (!aggregatedData[dateKey]) {
-            aggregatedData[dateKey] = {
-              date: dateKey,
-              point: 0,
-              completed: 0,
-            }
+          if (item.type === 'POINT') {
+            points[dateKey] = (points[dateKey] || 0) + 1
+          } else if (item.type === 'COMPLETION') {
+            completions[dateKey] = (completions[dateKey] || 0) + 1
           }
-
-          aggregatedData[dateKey].point += 1 // Incrementa o valor dos pontos
         })
 
-        // Transforma o objeto consolidado em um array e ordena por data
-        const transformedData = Object.values(aggregatedData).sort((a, b) =>
-          a.date.localeCompare(b.date),
+        const pointsArray = Object.entries(points).map(([date, count]) => ({
+          date,
+          count,
+        }))
+        const completionsArray = Object.entries(completions).map(
+          ([date, count]) => ({ date, count }),
         )
 
-        setChartData(transformedData)
+        setPointsData(pointsArray)
+        setCompletionData(completionsArray)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
     }
 
     fetchData()
-  }, [])
+  }, [user?.id])
 
   const formatDateTick = (date: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [year, month, day] = date.split('-')
     return `${day}/${month}`
   }
 
   return (
-    <ResponsiveContainer width="30%" height={230}>
-      <BarChart data={chartData}>
-        <XAxis dataKey="date" tickFormatter={formatDateTick} />
-        <Tooltip contentStyle={{ background: '#000' }} />
-        <Bar dataKey="point" fill="#8884d8" name="Pontos" legendType="circle" />
-      </BarChart>
-    </ResponsiveContainer>
+    <div className="flex flex-wrap justify-between gap-5">
+      <div className="w-full md:w-2/5">
+        <ResponsiveContainer width="100%" height={230}>
+          <BarChart data={pointsData}>
+            <XAxis dataKey="date" tickFormatter={formatDateTick} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="count" fill="#3b82f6" name="Pontos" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="w-full md:w-2/5">
+        <ResponsiveContainer width="100%" height={230}>
+          <BarChart data={completionData}>
+            <XAxis dataKey="date" tickFormatter={formatDateTick} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="count" fill="#10B981" name="Concluídos" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   )
 }
 

@@ -3,9 +3,9 @@ import { Header } from '../../../components/Header'
 
 export function Employee() {
   return (
-    <div>
+    <div className="flex flex-col overflow-x-hidden">
       <Header title={'Funcionário'} />
-      <div className="md:px-28 py-10">
+      <div className="px-4 sm:px-10 md:px-30 py-10 overflow-x-hidden">
         <CardListEmployee />
       </div>
     </div>
