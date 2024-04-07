@@ -41,7 +41,7 @@ export function MenuDashboard() {
         </button>
       </div>
       <aside
-        className={`bg-neutral-800  text-white w-max h-screen space-y-6 py-5 px-2 md:flex md:flex-col md:min-h-screen transform transition-transform duration-300 ease-in-out 
+        className={`fixed z-50 top-0 left-0 bg-neutral-800  text-white w-max h-screen space-y-6 py-5 px-2 md:flex md:flex-col md:min-h-screen transform transition-transform duration-300 ease-in-out 
     ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
       >
         <div className="px-2 transition duration-200">

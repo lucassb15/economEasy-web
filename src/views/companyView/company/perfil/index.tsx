@@ -60,7 +60,7 @@ export function Perfil() {
   console.log(user?.isActive)
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen md:px-10">
       <MenuDashboard />
       <div className="mx-5 flex-1 p-10">
         <div className="text-2xl font-bold">

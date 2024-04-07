@@ -40,7 +40,7 @@ function AdList() {
   const { onOpen, onClose } = useDisclosure()
 
   const imageSize = useBreakpointValue({
-    base: '50px',
+    base: '200px',
     sm: '75px',
     md: '200px',
   })
@@ -90,6 +90,7 @@ function AdList() {
             w="full"
             maxW="100%"
             h="max"
+            overflowX={'hidden'}
             maxHeight="400px"
             p={4}
             boxShadow="md"

@@ -4,10 +4,10 @@ import EmployeeList from '@components/formCompany/EmployeeList'
 
 export function RegisterEmployee() {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen md:px-10">
       <MenuDashboard />
       {/* Aqui fazer a importação e criação da dashboard */}
-      <div className="mx-5 flex-1 p-10">
+      <div className="md:mx-5 flex-1 p-10">
         <div>
           <FormController page="company/employee" />
         </div>
